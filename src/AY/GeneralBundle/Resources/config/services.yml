@@ -1,0 +1,7 @@
+parameters:
+#    ay_general.example.class: AY\GeneralBundle\Example
+
+services:
+#    ay_general.example:
+#        class: %ay_general.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
