@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+Номерочек: {{ number }}
+
+{% if app.session.hasFlash('notice') %}
+    <div style='color: green; border: 1px solid green; width: 40%'>
+        {{ app.session.flash('notice') }}
+    </div>
+{% endif %}
+
+<div style='border: 1px solid black; background: #abcdef; margin: 10px; width: 40%'>
+    <form method="post" novalidate="novalidate">
+        {{ form_errors(ss_form) }}
+        подписаться по емейл или телефону (смс):
+        {{ form_widget(ss_form) }}
+        <input type="submit">
+    </form>
+</div>
+
+{% if messages %}
+    <div style='border: 1px solid black; margin: 10px; width: 40%'>
+        у нас есть сообщеньки!
+
+        <ul>
+            {% for m in messages %}
+                <li>
+                    {{ m.id }}. 
+                    by {{ m.getUserName() }}
+                    at
+                    {{ m.getCreatedAt('date') }}
+                    about
+                    <b><a href="{{ path('number', { 'number': m.getNumber() }) }}">{{ m.getNumberTranslated() }}</a></b>
+                    <br />
+                    {% if m.getImage() %}
+                        <img src="{{ m.getImageThumb() }}" />
+                    {% elseif m.getImageTmp() %}
+                        <i>изображение в процессе обработки</i>
+                    {% endif %}                        
+                    <br />
+                    {{ m.getText() }}
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+{% else %}
+
+а про него еще никто ничего не сказал :-)
+
+{% endif %}
+
+
+{% endblock %}

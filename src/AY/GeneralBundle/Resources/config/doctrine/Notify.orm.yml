@@ -1,0 +1,21 @@
+AY\GeneralBundle\Entity\Notify:
+  type: entity
+  table: null
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    message_id:
+      type: integer
+    tweet_done:
+      type: boolean
+      nullable: true
+    notify_done:
+      type: boolean
+      nullable: true
+    created_at:
+      type: datetime
+  lifecycleCallbacks: 
+    prePersist: [ processPrePersist ]

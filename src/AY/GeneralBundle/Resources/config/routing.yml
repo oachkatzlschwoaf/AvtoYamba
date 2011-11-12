@@ -1,3 +1,21 @@
-AYGeneralBundle_homepage:
-    pattern:  /hello/{name}
+homepage:
+    pattern:  /index
     defaults: { _controller: AYGeneralBundle:Default:index }
+
+number:
+    pattern:  /number/{number}
+    defaults: { _controller: AYGeneralBundle:Default:number }
+
+search_number:
+    pattern:  /search_number
+    defaults: { _controller: AYGeneralBundle:Default:searchNumber }
+
+# API
+
+#api_post_message:
+#    pattern:  /api/message/post
+#    defaults: { _controller: FrontGeneralBundle:Default:postMessage }
+
+api_update_message:
+    pattern:  /api/message/update
+    defaults: { _controller: AYGeneralBundle:Default:updateMessage }

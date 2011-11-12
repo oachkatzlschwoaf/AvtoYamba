@@ -1,0 +1,57 @@
+AY\GeneralBundle\Entity\Message:
+  type: entity
+  table: null
+  indexes:
+    number_index:
+      columns: [ number ]
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    number:
+      type: string
+      length: '20'
+    country:
+      type: integer
+    number_type:
+      type: integer
+    user_id:
+      type: integer
+      nullable: true
+    user_name:
+      type: string
+      length: '30'
+      nullable: true
+    text:
+      type: string
+      length: '140'
+    image:
+      type: string
+      length: '255'
+      nullable: true
+    image_tmp:
+      type: string
+      length: 255
+      nullable: true
+    image_thumb:
+      type: string
+      length: 255
+      nullable: true
+    image_thumb_2:
+      type: string
+      length: 255
+      nullable: true
+    rate:
+      type: integer
+      nullable: true
+    tweet_id:
+      type: string
+      length: '50'
+      nullable: true
+    created_at:
+      type: datetime
+  lifecycleCallbacks:     
+    prePersist: [ processPrePersist ]
+    postPersist: [ processPostPersist ]

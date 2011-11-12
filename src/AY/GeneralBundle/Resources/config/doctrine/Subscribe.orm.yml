@@ -1,0 +1,28 @@
+AY\GeneralBundle\Entity\Subscribe:
+  type: entity
+  table: null
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    number:
+      type: string
+      length: '20'
+    country:
+      type: integer
+    number_type:
+      type: integer
+    email:
+      type: string
+      length: 255
+      nullable: true
+    phone:
+      type: string
+      length: 255
+      nullable: true
+    created_at:
+      type: datetime
+  lifecycleCallbacks: 
+    prePersist: [ processPrePersist ]

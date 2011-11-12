@@ -1,0 +1,135 @@
+<?php
+
+namespace AY\GeneralBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * AY\GeneralBundle\Entity\Notify
+ */
+class Notify
+{
+    /**
+     * @var integer $id
+     */
+    private $id;
+
+    /**
+     * @var integer $message_id
+     */
+    private $message_id;
+
+    /**
+     * @var boolean $tweet_done
+     */
+    private $tweet_done;
+
+    /**
+     * @var boolean $notify_done
+     */
+    private $notify_done;
+
+    /**
+     * @var datetime $created_at
+     */
+    private $created_at;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set message_id
+     *
+     * @param integer $messageId
+     */
+    public function setMessageId($messageId)
+    {
+        $this->message_id = $messageId;
+    }
+
+    /**
+     * Get message_id
+     *
+     * @return integer 
+     */
+    public function getMessageId()
+    {
+        return $this->message_id;
+    }
+
+    /**
+     * Set tweet_done
+     *
+     * @param boolean $tweetDone
+     */
+    public function setTweetDone($tweetDone)
+    {
+        $this->tweet_done = $tweetDone;
+    }
+
+    /**
+     * Get tweet_done
+     *
+     * @return boolean 
+     */
+    public function getTweetDone()
+    {
+        return $this->tweet_done;
+    }
+
+    /**
+     * Set notify_done
+     *
+     * @param boolean $notifyDone
+     */
+    public function setNotifyDone($notifyDone)
+    {
+        $this->notify_done = $notifyDone;
+    }
+
+    /**
+     * Get notify_done
+     *
+     * @return boolean 
+     */
+    public function getNotifyDone()
+    {
+        return $this->notify_done;
+    }
+
+    /**
+     * Set created_at
+     *
+     * @param datetime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return datetime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * @ORM\prePersist
+     */
+    public function processPrePersist()
+    {
+        $this->created_at = new \DateTime;
+    }
+}

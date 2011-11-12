@@ -1,1 +1,57 @@
-Hello {{ name }}!
+{% extends '::base.html.twig' %}
+
+{% block body %}
+Превед! 
+
+<div style='border: 1px solid gray; background: #cccccc; margin: 10px; width: 40%'>
+
+    <form method="post" {{ form_enctype(form) }} novalidate="novalidate">
+        {{ form_errors(form) }}
+
+        {{ form_widget(form) }}
+
+        <input type="submit">
+    </form>
+
+</div>
+
+<div style='border: 1px solid gray; background: #fffbcd; margin: 10px; width: 40%'>
+
+    <form method="post" action="{{ path('search_number') }}" >
+        Найти номер:
+        <input type="text" name="number"> 
+
+        <input type="submit">
+    </form>
+
+</div>
+
+{% if messages %}
+    <div style='border: 1px solid black; margin: 10px; width: 40%'>
+        у нас есть сообщеньки!
+
+        <ul>
+            {% for m in messages %}
+                <li>
+                    {{ m.id }}. 
+                    by {{ m.getUserName() }}
+                    at
+                    {{ m.getCreatedAt('date') }}
+                    about
+                    <b><a href="{{ path('number', { 'number': m.getNumber() }) }}">{{ m.getNumberTranslated() }}</a></b>
+                    <br />
+                    {% if m.getImage() %}
+                        <img src="{{ m.getImageThumb() }}" />
+                    {% elseif m.getImageTmp() %}
+                        <i>изображение в процессе обработки</i>
+                    {% endif %}                        
+                    <br />
+                    {{ m.getText() }}
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+{% endif %}
+
+{% endblock %}

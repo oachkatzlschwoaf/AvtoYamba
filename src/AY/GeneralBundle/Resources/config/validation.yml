@@ -1,0 +1,14 @@
+AY\GeneralBundle\Entity\Message:
+    properties:
+        number:
+            - NotBlank: ~
+        user_name:
+            - NotBlank: ~
+            - MinLength: 3
+        text:    
+            - NotBlank: ~
+            - MinLength: 3
+            - MaxLength: 140
+    constraints:        
+        - Callback: 
+            methods: [ isNumberValid ]
