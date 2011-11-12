@@ -170,4 +170,40 @@ class DefaultController extends Controller {
 
         return new Response( json_encode($answer) );
     }
+
+    public function postMessageAction(Request $req) {
+        $answer = array('post' => 'fail');
+
+        if ($req->getMethod() == 'POST') {
+            # Create new message
+            $message = new Message();             
+            $message->setNumber( $req->request->get('number') );
+            $message->setUserName( $req->request->get('user_name') );
+            $message->setText( $req->request->get('text') );
+            $message->setTweetId( $req->request->get('tid') );
+
+            if ($req->request->get('image')) {
+                $img = $req->request->get('image');
+                $message->setImage( $img );
+                $message->setImageThumb( $img.':thumb' );
+            }    
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($message);
+            $em->flush();
+
+            # Create notify for message
+            $notify = new Notify;
+            $notify->setMessageId( $message->getId() );
+            $notify->setTweetDone(1);
+
+            $em->persist($notify);
+            $em->flush();
+
+            $answer = array('post' => 'done');
+        }
+
+        return new Response( json_encode($answer) );
+    }
+
 }

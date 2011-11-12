@@ -107,6 +107,11 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'AY\\GeneralBundle\\Controller\\DefaultController::searchNumberAction',  '_route' => 'search_number',);
         }
 
+        // api_post_message
+        if ($pathinfo === '/api/message/post') {
+            return array (  '_controller' => 'AY\\GeneralBundle\\Controller\\DefaultController::postMessageAction',  '_route' => 'api_post_message',);
+        }
+
         // api_update_message
         if ($pathinfo === '/api/message/update') {
             return array (  '_controller' => 'AY\\GeneralBundle\\Controller\\DefaultController::updateMessageAction',  '_route' => 'api_update_message',);

@@ -12,9 +12,9 @@ search_number:
 
 # API
 
-#api_post_message:
-#    pattern:  /api/message/post
-#    defaults: { _controller: FrontGeneralBundle:Default:postMessage }
+api_post_message:
+    pattern:  /api/message/post
+    defaults: { _controller: AYGeneralBundle:Default:postMessage }
 
 api_update_message:
     pattern:  /api/message/update

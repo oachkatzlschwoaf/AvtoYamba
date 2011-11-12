@@ -27,6 +27,7 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
        'homepage' => true,
        'number' => true,
        'search_number' => true,
+       'api_post_message' => true,
        'api_update_message' => true,
     );
 
@@ -119,6 +120,11 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
     private function getsearch_numberRouteInfo()
     {
         return array(array (), array (  '_controller' => 'AY\\GeneralBundle\\Controller\\DefaultController::searchNumberAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/search_number',  ),));
+    }
+
+    private function getapi_post_messageRouteInfo()
+    {
+        return array(array (), array (  '_controller' => 'AY\\GeneralBundle\\Controller\\DefaultController::postMessageAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/api/message/post',  ),));
     }
 
     private function getapi_update_messageRouteInfo()
