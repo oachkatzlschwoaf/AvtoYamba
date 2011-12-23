@@ -3,6 +3,13 @@
 use strict;
 use warnings;
 
+=head1 Andromalius
+
+Post messages from site to Twitter.
+Attach uploaded images from Twitter to site messages.
+
+=cut
+
 use Daemon::Generic;
 use DBI;
 use Encode;
