@@ -2,8 +2,8 @@ api:
     login: 'api'
     pass: '7baa09b8cec43a12ae4d17f6c1757dec'
     url:
-        update: 'http://193.169.33.196/a/app_dev.php/api/message/update'
-        post: 'http://193.169.33.196/a/app_dev.php/api/message/post'
+        update: 'http://avtoyamba.com/ay/app_dev.php/api/message/update'
+        post: 'http://avtoyamba.com/ay/app_dev.php/api/message/post'
 
 tmpl_path: '/home/roma/avto/main/scripts/tmpl'
 

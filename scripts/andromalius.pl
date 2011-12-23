@@ -91,7 +91,7 @@ sub getNewMessages {
     my ($d) = @_;
 
     # Get notifies
-    my $query = "select * from Notify where tweet_done = ? or tweet_done is null;";
+    my $query = "select id, message_id, tweet_done, notify_done, created_at from Notify where tweet_done = ? or tweet_done is null;";
     my $eq = $d->prepare($query);
     my $rows = $eq->execute(0);
 
@@ -108,7 +108,7 @@ sub getNewMessages {
 
     # Get messages
     my $ph = substr("?, " x scalar(keys %message_id), 0, -2);
-    $query = "select * from Message where ID in ($ph)";
+    $query = "select id, number, user_name, text, image_tmp from Message where ID in ($ph)";
     $eq = $d->prepare($query);
     $rows = $eq->execute(keys %message_id);
 
@@ -120,10 +120,10 @@ sub getNewMessages {
         push(@{ $message{ $m[1] } }, {
             'id'        => $m[0], 
             'nid'       => $message_id{ $m[0] },
-            'author'    => $m[3], 
-            'text'      => $m[4],
+            'author'    => $m[2], 
+            'text'      => $m[3],
             'number'    => $m[1],
-            'image_tmp' => $m[6],
+            'image_tmp' => $m[4],
         });
 
         $number{ $m[1] } = 1;

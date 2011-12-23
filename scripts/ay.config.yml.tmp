@@ -1,0 +1,31 @@
+api:
+    login: 'api'
+    pass: '7baa09b8cec43a12ae4d17f6c1757dec'
+    url:
+        update: 'http://193.169.33.196/a/app_dev.php/api/message/update'
+        post: 'http://193.169.33.196/a/app_dev.php/api/message/post'
+
+tmpl_path: '/home/roma/avto/main/scripts/tmpl'
+
+db:
+    name: 'AVTOYAMBA'
+    user: 'root'
+    pass: 'rjirftcn'
+
+mail:
+   from: 'yobot@avtoyamba.com' 
+   server: 'mail.homestyle.ru'
+   user: 'support@adrriva.ru'
+   pass: 'g6u2NXnmR'
+
+sms:
+   api_url: 'https://api.sms24x7.ru/' 
+   email: 'avtoyamba@gmail.com'
+   pass: 'MVTSdFz'
+
+twitter:
+    consumer_key: 'SgDPCQRfelzP58bdIRiKA'
+    consumer_secret: 'cK9ImLnKWBFpadK8AZNLH8wBFrmHAHNL2L8JBzyz264'
+    access_token: '399645421-m41YdrFctICoAUSBwkrSJLrQN2LikB3dm5vYyQUd'
+    access_token_secret: 'tAoszrGuNUhWMfGH8I2HZI4JAaZbgqKP0KpqpFQ5jRo'
+    ay_user_id: '399645421'
