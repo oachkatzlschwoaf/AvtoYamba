@@ -1,0 +1,16 @@
+AY\GeneralBundle\Entity\Config:
+  type: entity
+  table: null
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    parameter:
+      type: string
+      length: 255
+    value:
+      type: string
+      length: 255
+  lifecycleCallbacks: {  }

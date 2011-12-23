@@ -20,6 +20,7 @@ use HTTP::Cookies;
 use HTTP::Request::Common qw/POST/;
 use XML::Simple;
 use Digest::MD5 qw/md5_hex/;
+use Math::BigInt;
 
 $|++;
 
@@ -175,19 +176,21 @@ sub processTweets {
     my ($tweets, $max_id, $conf) = @_;
 
     INFO "Begin process ".scalar(@$tweets)." tweets\n";
+    $max_id = Math::BigInt->new($max_id);
 
     foreach my $t (@$tweets) {
         my $tweet_id = $t->{'id'};
         my $htags    = $t->{'entities'}{'hashtags'};
         INFO "\tProcess $tweet_id"; 
 
+        my $tweet_id_bi = Math::BigInt->new($tweet_id);
+        $max_id = $tweet_id_bi if ($tweet_id_bi > $max_id);
+
         if ($t->{'user'}{'id'} eq $conf->{'twitter'}{'ay_user_id'}) {
             # AvtoYamba don't post AvtoYamba :-)
             ERROR "\tResult: FAIL - avtoyamba tweat!";
             next;
         }
-
-        $max_id = $tweet_id if ($tweet_id > $max_id);
 
         my $number = findNumberInHash($htags);
 
