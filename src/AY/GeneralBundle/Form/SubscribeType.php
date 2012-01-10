@@ -14,6 +14,7 @@ class SubscribeType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options) {
         $builder->add('email', 'email');
         $builder->add('phone', 'text');
+        $builder->add('captcha', 'captcha', array('error_bubbling' => 'true'));
     }
 
     public function getName() {
@@ -22,8 +23,17 @@ class SubscribeType extends AbstractType
 
     public function getDefaultOptions(array $options) {
         $collectionConstraint = new Collection(array(
-            'email' => new Email(array('message' => 'Invalid email address')),
-            'phone' => new Regex('/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/'),
+            'email' => new Email(
+                array(
+                    'message' => 'Email не правильного формата! (корректный пример: me@example.com)'
+                )
+            ),
+            'phone' => new Regex(
+                array(
+                    'pattern' => '/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/',
+                    'message' => 'опа!'
+                )
+            )
         ));
 
         $options['validation_constraint'] = $collectionConstraint;

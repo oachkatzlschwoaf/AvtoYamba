@@ -18,6 +18,7 @@
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
       <parameter key="JMSSecurityExtraBundle">JMS\SecurityExtraBundle\JMSSecurityExtraBundle</parameter>
       <parameter key="AYGeneralBundle">AY\GeneralBundle\AYGeneralBundle</parameter>
+      <parameter key="GregwarCaptchaBundle">Gregwar\CaptchaBundle\GregwarCaptchaBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
       <parameter key="SensioGeneratorBundle">Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle</parameter>
@@ -231,6 +232,7 @@
     <parameter key="twig.exception_listener.class">Symfony\Component\HttpKernel\EventListener\ExceptionListener</parameter>
     <parameter key="twig.exception_listener.controller">Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction</parameter>
     <parameter key="twig.form.resources" type="collection">
+      <parameter>GregwarCaptchaBundle::captcha.html.twig</parameter>
       <parameter>form_div_layout.html.twig</parameter>
     </parameter>
     <parameter key="twig.options" type="collection">
@@ -367,6 +369,20 @@
     <parameter key="security.extra.controller_listener.class">JMS\SecurityExtraBundle\Controller\ControllerListener</parameter>
     <parameter key="security.access.iddqd_voter.class">JMS\SecurityExtraBundle\Security\Authorization\Voter\IddqdVoter</parameter>
     <parameter key="security.extra.secure_all_services">false</parameter>
+    <parameter key="gregwar_captcha.config" type="collection">
+      <parameter key="length">5</parameter>
+      <parameter key="width">120</parameter>
+      <parameter key="height">40</parameter>
+      <parameter key="font">/home/user/ay/AvtoYamba/vendor/bundles/Gregwar/CaptchaBundle/DependencyInjection/../Generator/Font/captcha.ttf</parameter>
+      <parameter key="keep_value">true</parameter>
+      <parameter key="charset">abcdefhjkmnprstuvwxyz23456789</parameter>
+      <parameter key="as_file">false</parameter>
+      <parameter key="image_folder">captcha</parameter>
+      <parameter key="web_path">/home/user/ay/AvtoYamba/app/../web</parameter>
+      <parameter key="gc_freq">100</parameter>
+      <parameter key="expiration">60</parameter>
+      <parameter key="quality">15</parameter>
+    </parameter>
     <parameter key="web_profiler.debug_toolbar.class">Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener</parameter>
     <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
     <parameter key="web_profiler.debug_toolbar.mode">2</parameter>
@@ -736,6 +752,7 @@
               <argument key="url">form.type.url</argument>
               <argument key="csrf">form.type.csrf</argument>
               <argument key="entity">form.type.entity</argument>
+              <argument key="captcha">captcha.type</argument>
             </argument>
             <argument type="collection">
               <argument key="field" type="collection">
@@ -1476,6 +1493,7 @@
           <service class="Symfony\Bridge\Twig\Extension\FormExtension" public="false">
             <tag name="twig.extension"/>
             <argument type="collection">
+              <argument>GregwarCaptchaBundle::captcha.html.twig</argument>
               <argument>form_div_layout.html.twig</argument>
             </argument>
           </service>
@@ -1966,6 +1984,33 @@
               <argument type="service">
                 <service class="%assetic.directory_resource.class%" public="false">
                   <argument type="service" id="templating.loader"/>
+                  <argument>GregwarCaptchaBundle</argument>
+                  <argument>/home/user/ay/AvtoYamba/app/Resources/GregwarCaptchaBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>GregwarCaptchaBundle</argument>
+                  <argument>/home/user/ay/AvtoYamba/vendor/bundles/Gregwar/CaptchaBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
                   <argument>WebProfilerBundle</argument>
                   <argument>/home/user/ay/AvtoYamba/app/Resources/WebProfilerBundle/views</argument>
                   <argument>/^[^.]+\.[^.]+\.twig$/</argument>
@@ -2135,6 +2180,24 @@
       <tag name="kernel.event_listener" event="kernel.controller" method="onCoreController" priority="-255"/>
       <argument type="service" id="service_container"/>
       <argument type="service" id="annotation_reader"/>
+    </service>
+    <service id="captcha.type" class="Gregwar\CaptchaBundle\Type\CaptchaType">
+      <tag name="form.type" alias="captcha"/>
+      <argument type="service" id="session"/>
+      <argument type="collection">
+        <argument key="length">5</argument>
+        <argument key="width">120</argument>
+        <argument key="height">40</argument>
+        <argument key="font">/home/user/ay/AvtoYamba/vendor/bundles/Gregwar/CaptchaBundle/DependencyInjection/../Generator/Font/captcha.ttf</argument>
+        <argument key="keep_value">true</argument>
+        <argument key="charset">abcdefhjkmnprstuvwxyz23456789</argument>
+        <argument key="as_file">false</argument>
+        <argument key="image_folder">captcha</argument>
+        <argument key="web_path">/home/user/ay/AvtoYamba/app/../web</argument>
+        <argument key="gc_freq">100</argument>
+        <argument key="expiration">60</argument>
+        <argument key="quality">15</argument>
+      </argument>
     </service>
     <service id="web_profiler.debug_toolbar" class="Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener">
       <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" priority="-128"/>

@@ -2,54 +2,132 @@
 
 {% block body %}
 
-Номерочек: {{ number }}
+<div id="subscribe-modal" class="modal hide fade">
+    <div class="modal-header">
+        <a href="#" class="close">&times;</a>
+        <h3>Подписаться</h3>
+    </div>
+    <div class="modal-body">
+        <div id="ss-alert" class="alert-message error hide" data-alert="alert" >
+            <b>Пичалька!</b> Форма заполнена некорректно :-(
+        </div>
+        <p>
+            Смс бесплатные и вообще профит!
+        </p>
+        <form action="{{ path('number', { 'number' : number } ) }}" id="ss-form" method="post" {{ form_enctype(form) }} novalidate class="form-stacked">
+
+            <fieldset>
+                <div class="clearfix">
+                    {{ form_label(ss_form.email, 'E-Mail:') }}
+
+                    <div class="input">
+                        {{ form_widget(ss_form.email) }}
+                        <span class="help-block">Например example@mail.ru</span>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    {{ form_label(ss_form.phone, 'Телефон:') }}
+
+                    <div class="input">
+                        {{ form_widget(ss_form.phone) }}
+                        <span class="help-block">Например +7 903 123 56 78</span>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    {{ form_label(ss_form.captcha, 'Введите код с картинки:') }}
+
+                    <div class="input">
+                        {{ form_widget(ss_form.captcha) }}
+                    </div>
+                </div>
+
+                {{ form_rest(ss_form) }}
+            </fieldset>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" class="btn primary" value="Подписаться!" />
+    </div>
+    </form>
+
+    <script type="text/javascript"> 
+        $(document).ready(function() { 
+            $('#ss-form').ajaxForm({ 
+                dataType: 'json',
+                success: processSubscribe
+            }); 
+        }); 
+
+        $('#subscribe-modal').bind('hide', function () {
+            $('#ss-alert').hide();
+        })
+
+        function processSubscribe(data) {
+            if (data.fail == 1) {
+                $("#ss-alert").show();
+            } else {
+                $('#ss-alert').hide();
+            }
+        }
+    </script> 
+</div>
+
+<div class="container"> 
+
+    <div class="content">
+        <div class="row">
+            <div class="span9">
+                <div style="margin-bottom: 5px">
+                    {% render 'AYGeneralBundle:Default:showCarNumber' with { 'format' : 50, 'number' : number } %}
+                </div>
+                <p><small>Вы можете получать новые сообщения на мобильный</small></p>
+                <a class="btn success" data-controls-modal="write-modal" data-backdrop="true">Написать сообщение!</a>
+                <a class="btn primary" data-controls-modal="subscribe-modal" data-backdrop="true">Подписаться</a>
+            </div>
+            <div class="span14" style="margin-bottom: 10px">
+                <hr />
+                <h2>Последние записи:</h2>
+            </div>
+
+            {% if messages %}
+                <div class="span9">
+                    {% for m in messages %}
+                        <div data-id="{{ m.getId }}" class="message">
+                            <div style="float:left; overflow: hidden; margin-left: 5px; padding-left: 2px; width: 80%;">
+                                <h5 style="line-height: 16px">{{ m.getUserName() }}</h5>
+                                <p>
+                                    {{ m.getText() }}
+                                    <br />
+                                    <small>{{ m.getCreatedAt('date') }}</small>
+                                </p>
+                            </div>
+                            <div style="float: left; overflow: hidden; margin-left: 7px; width:75px;">
+                                {% if m.getImageThumb() %}
+                                    <ul class="media-grid">
+                                        <li>
+                                            <a target="_blank" href="{{ m.getImage() }}:large">
+                                                <img src="{{ m.getImageThumb() }}" style="width: 60px; height: 60px;" />
+                                            </a>
+                                        </li>
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+                а про него еще никто ничего не сказал :-)
+            {% endif %}
+
+        </div>
+    </div>
+</div>
 
 {% if app.session.hasFlash('notice') %}
     <div style='color: green; border: 1px solid green; width: 40%'>
         {{ app.session.flash('notice') }}
     </div>
 {% endif %}
-
-<div style='border: 1px solid black; background: #abcdef; margin: 10px; width: 40%'>
-    <form method="post" novalidate="novalidate">
-        {{ form_errors(ss_form) }}
-        подписаться по емейл или телефону (смс):
-        {{ form_widget(ss_form) }}
-        <input type="submit">
-    </form>
-</div>
-
-{% if messages %}
-    <div style='border: 1px solid black; margin: 10px; width: 40%'>
-        у нас есть сообщеньки!
-
-        <ul>
-            {% for m in messages %}
-                <li>
-                    {{ m.id }}. 
-                    by {{ m.getUserName() }}
-                    at
-                    {{ m.getCreatedAt('date') }}
-                    about
-                    <b><a href="{{ path('number', { 'number': m.getNumber() }) }}">{{ m.getNumberTranslated() }}</a></b>
-                    <br />
-                    {% if m.getImage() %}
-                        <img src="{{ m.getImageThumb() }}" />
-                    {% elseif m.getImageTmp() %}
-                        <i>изображение в процессе обработки</i>
-                    {% endif %}                        
-                    <br />
-                    {{ m.getText() }}
-                </li>
-            {% endfor %}
-        </ul>
-
-    </div>
-{% else %}
-
-а про него еще никто ничего не сказал :-)
-
-{% endif %}
-
 
 {% endblock %}

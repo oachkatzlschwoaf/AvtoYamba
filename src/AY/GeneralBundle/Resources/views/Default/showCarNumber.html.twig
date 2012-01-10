@@ -1,0 +1,10 @@
+<div class="number_{{ format }}" style="background: url('http://avtoyamba.com/images/{{ sprite }}') {% if (format == 25) %}0px 25px; width: 115px; height: 25px;{% elseif (format == 50 ) %}0px 50px; width: 225px; height: 50px;{% endif %}">
+    {% for n_o in num_off %}
+        <div class="num {% if (loop.index < 2 or loop.index > 4) %}chr{% endif %}" style="background: url('http://avtoyamba.com/images/{{ sprite }}') {{ n_o.0 }}px {{ n_o.1 }}px; width: {{ n_o.2 }}px; height: {{ n_o.3 }}px;"></div>
+    {% endfor  %}
+    <div class="region" style="{% if reg_off|length < 3 %} {% if (format == 25) %}margin-left: 12px{% elseif (format == 50) %}margin-left: 19px{% endif %}{% endif %}">
+        {% for n_o in reg_off %}
+            <div class="reg" style="background: url('http://avtoyamba.com/images/{{ sprite }}') {{ n_o.0 }}px {{ n_o.1 }}px; width: {{ n_o.2 }}px; height: {{ n_o.3 }}px;"></div>
+        {% endfor  %}
+    </div>
+</div>

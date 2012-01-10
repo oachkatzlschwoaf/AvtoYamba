@@ -1,57 +1,90 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-Превед! 
 
-<div style='border: 1px solid gray; background: #cccccc; margin: 10px; width: 40%'>
+<div class="container"> 
+    <div class="content">
+        <div class="row">
+            <div class="span9">
+                <h2>Что это такое?</h2>
+                <p style="height: 100px">
+                    АвтоЩито? АвтоЯмба! Это сервис с помощью которого можно БЕЗ регистрации анонимно отправлять сообщения на номера автомобилей!
+                    <br /><br />
+                    Вы можете читать, что вам пишут другие автомобилисты по СМС или по емейлу.
+                    <br /><br />
+                </p>
+                <a class="btn success" data-controls-modal="write-modal" data-backdrop="true">Написать сообщение!</a>
+                <a class="btn primary" id="search-number">Найти сообщения по номеру</a>
+            </div>
+            <div class="span5">
+            </div>
 
-    <form method="post" {{ form_enctype(form) }} novalidate="novalidate">
-        {{ form_errors(form) }}
+            <div class="span14" style="margin-bottom: 10px">
+                <hr />
+                <h2>Последние записи:</h2>
+            </div>
 
-        {{ form_widget(form) }}
-
-        <input type="submit">
-    </form>
-
-</div>
-
-<div style='border: 1px solid gray; background: #fffbcd; margin: 10px; width: 40%'>
-
-    <form method="post" action="{{ path('search_number') }}" >
-        Найти номер:
-        <input type="text" name="number"> 
-
-        <input type="submit">
-    </form>
-
-</div>
-
-{% if messages %}
-    <div style='border: 1px solid black; margin: 10px; width: 40%'>
-        у нас есть сообщеньки!
-
-        <ul>
-            {% for m in messages %}
-                <li>
-                    {{ m.id }}. 
-                    by {{ m.getUserName() }}
-                    at
-                    {{ m.getCreatedAt('date') }}
-                    about
-                    <b><a href="{{ path('number', { 'number': m.getNumber() }) }}">{{ m.getNumberTranslated() }}</a></b>
-                    <br />
-                    {% if m.getImage() %}
-                        <img src="{{ m.getImageThumb() }}" />
-                    {% elseif m.getImageTmp() %}
-                        <i>изображение в процессе обработки</i>
-                    {% endif %}                        
-                    <br />
-                    {{ m.getText() }}
-                </li>
-            {% endfor %}
-        </ul>
+            {% if messages %}
+                <div class="span10">
+                    {% for m in messages %}
+                            <div data-id="{{ m.getId }}" class="message">
+                                <div style="float:left; overflow: hidden; margin: 2px 0px 0px 2px">
+                                    <a href="{{ path('number', { 'number' : m.getNumber } ) }}" style="display: block; overflow: hidden;">
+                                        {% render 'AYGeneralBundle:Default:showCarNumber' with { 'format' : 25, 'number' : m.getNumber() } %}
+                                    </a>
+                                </div>
+                                <div style="float:left; overflow: hidden; margin-left: 5px; padding-left: 2px; width: 62%;">
+                                    <h5 style="line-height: 16px">{{ m.getUserName() }}</h5>
+                                    <p>
+                                        {{ m.getText() }}
+                                        <br />
+                                        <small>{{ m.getCreatedAt('date') }}</small>
+                                    </p>
+                                    <p style="min-height: 20px; margin-top: 0px">
+                                        <small class="menu_small hide" id="menu_m_{{ m.getId() }}">
+                                            <a href="{{ path('number', { 'number' : m.getNumber } ) }}">Другие сообщения &rarr;</a>
+                                        </small>
+                                    </p>
+                                </div>
+                                <div style="float: left; overflow: hidden; margin-left: 7px; width:75px;">
+                                    {% if m.getImageThumb() %}
+                                        <ul class="media-grid">
+                                            <li>
+                                                <a target="_blank" href="{{ m.getImage() }}:large">
+                                                    <img src="{{ m.getImageThumb() }}" style="width: 60px; height: 60px;" />
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
     </div>
-{% endif %}
+
+</div> <!-- /container -->
+
+<script>
+    $('#go-number').twipsy({'placement' : 'below', 'offset' : 12 })
+
+    $('#search-number').click(function() {
+        $('#go-number').twipsy('show');
+    });
+
+    $('div.message').each(function(index) {
+        $(this).hover(
+            function() {
+                var el = $(this).find('.menu_small');
+                el.css('display', 'block');
+            },
+            function() {
+                var el = $(this).find('.menu_small');
+                el.css('display', 'none');
+            }
+        );
+    });
+</script>
 
 {% endblock %}

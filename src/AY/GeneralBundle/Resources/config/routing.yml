@@ -1,3 +1,7 @@
+_welcome:
+    pattern: /
+    defaults: { _controller: AYGeneralBundle:Default:index }
+
 homepage:
     pattern:  /index
     defaults: { _controller: AYGeneralBundle:Default:index }
