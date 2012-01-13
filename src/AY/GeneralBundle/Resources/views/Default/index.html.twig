@@ -13,6 +13,25 @@
                     Вы можете читать, что вам пишут другие автомобилисты по СМС или по емейлу.
                     <br /><br />
                 </p>
+				<h2>
+					Узнай, что о тебе думают другие!
+				</h2>
+				<p>
+					<form method="post" action="{{ path('search_number') }}" id="go-number" data-original-title="Введите свой здесь номер автомобиля и нажмите Перейти">
+                        <div class="b-car-number">
+							<p class="c-car-number">
+								<span class="car-number">
+									<input maxlength="6" type="text" name="number" value="{% if number is not defined %}а101аа{% else %}{{ number }}{% endif %}">
+								</span>
+								<small class="car-region">
+									<input maxlength="3" type="text" name="number-region" value="{% if number is not defined %}199{% else %}{{ number }}{% endif %}">
+								</small>
+							</p>
+							
+                        </div>						
+                        <input type="submit" value="Узнать!">
+                    </form>
+				</p>	
                 <a class="btn success" data-controls-modal="write-modal" data-backdrop="true">Написать сообщение!</a>
                 <a class="btn primary" id="search-number">Найти сообщения по номеру</a>
             </div>

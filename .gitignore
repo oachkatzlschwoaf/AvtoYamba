@@ -5,3 +5,7 @@
 /vendor/
 /app/config/parameters.ini
 /scripts/ay.config.yml
+*.tmproj
+app/logs/*
+.DS_Store
+*.log
