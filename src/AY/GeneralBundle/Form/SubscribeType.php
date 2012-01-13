@@ -14,7 +14,6 @@ class SubscribeType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options) {
         $builder->add('email', 'email');
         $builder->add('phone', 'text');
-        $builder->add('captcha', 'captcha', array('error_bubbling' => 'true'));
     }
 
     public function getName() {
