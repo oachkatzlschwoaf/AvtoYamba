@@ -27,7 +27,7 @@
                 <h3>Написать сообщение</h3>
             </div>
             <div class="modal-body">
-                <form method="post" {{ form_enctype(form) }} novalidate="novalidate" class="form-stacked">
+                <form action="{{ path('homepage') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="form-stacked">
                     
                     <fieldset>
                         <div class="clearfix">
@@ -37,12 +37,25 @@
                             </div>
                         </div>
                         <div class="clearfix">
+                            {{ form_label(form.text, 'Номер:') }}
+                            <div class="input">
+                                {{ form_widget(form.number) }}
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            {{ form_label(form.text, 'Фоточка:') }}
+                            <div class="input">
+                                {{ form_widget(form.image_upload) }}
+                            </div>
+                        </div>
+                        <div class="clearfix">
                             {{ form_label(form.text, 'Текст:') }}
                             <div class="input">
                                 {{ form_widget(form.text) }}
                             </div>
                         </div>
                     </fieldset>
+                    {{ form_rest(form) }}
 
                     <input type="submit">
                 </form>
