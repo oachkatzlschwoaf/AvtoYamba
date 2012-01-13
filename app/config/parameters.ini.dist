@@ -7,7 +7,7 @@
     database_port=""
     database_name="AVTOYAMBA"
     database_user="root"
-    database_password="rjirftcn"
+    database_password="root"
     mailer_transport="smtp"
     mailer_host="localhost"
     mailer_user=""
