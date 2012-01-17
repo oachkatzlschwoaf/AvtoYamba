@@ -1,0 +1,137 @@
+html {
+  background-color: #eee; }
+
+body {
+  background-color: #eee;
+  padding-top: 20px;
+  /* to make the container go all the way to the bottom of the topbar */ }
+
+.container {
+  width: 820px;
+  /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */ }
+
+/* Page header tweaks */
+
+.page-header {
+  background-color: #f5f5f5;
+  padding: 20px 20px 10px;
+  margin: -20px -20px 20px; }
+
+.content {
+  background-color: #fff;
+  padding: 20px;
+  margin: 40px -20px;
+  /* negative indent the amount of the padding to maintain the grid system */
+  -webkit-border-radius: 0 0 6px 6px;
+  -moz-border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
+
+.top-fill {
+  background-color: #999;
+  background-color: #999999;
+  background-repeat: repeat-x;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #555555), color-stop(100%, #333333));
+  background-color: #333;
+  background-color: #333333;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#555555), to(#333333));
+  background-image: -moz-linear-gradient(top, #555555, #333333);
+  background-image: -ms-linear-gradient(top, #555555, #333333);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #555555), color-stop(100%, #333333));
+  background-image: -webkit-linear-gradient(top, #555555, #333333);
+  background-image: -o-linear-gradient(top, #555555, #333333);
+  background-image: linear-gradient(top, #555555, #333333);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#555555', endColorstr='#222222', GradientType=0);
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1); }
+
+.number_25 {
+  padding-left: 8px;
+  .region {
+    margin-left: 8px;
+    overflow: hidden;
+    float: left; }
+  .num {
+    float: left;
+    position: relative;
+    top: 3px; }
+  .chr {
+    top: 8px; }
+  .reg {
+    float: left;
+    position: relative;
+    top: 2px; } }
+
+.number_50 {
+  padding-left: 17px;
+  .region {
+    margin: 2px 0 0 13px;
+    overflow: hidden;
+    float: left; }
+  .num {
+    float: left;
+    position: relative;
+    top: 3px; }
+  .chr {
+    top: 8px; }
+  .reg {
+    float: left;
+    position: relative;
+    top: 2px; } }
+
+.b-car-number {
+  background: url("/images/225x50_sprite.png") no-repeat left bottom;
+  width: 225px;
+  height: 50px;
+  position: relative;
+  input[type=text] {
+    border: 0 !important;
+    border-radius: 0;
+    box-shadow: initial;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none;
+    &:focus {
+      border: 0 !important;
+      text-align: center; } }
+  font-family: "Conv_RoadNumbers", Sans-Serif;
+  color: black;
+  font-size: 38px;
+  * {
+    font-family: "Conv_RoadNumbers", Sans-Serif;
+    color: black;
+    font-size: 38px; }
+  .c-car-number {
+    padding: 12px 27px; }
+  .car-number {
+    width: 130px;
+    display: block;
+    input[type=text] {
+      letter-spacing: 5px; } }
+  .car-region {
+    position: absolute;
+    right: 13px;
+    top: 7px;
+    line-height: 19px;
+    width: 40px;
+    input[type=text] {
+      font-size: 0.7em;
+      letter-spacing: 1px; } } }
+
+.hr-norm {
+  margin: 20px 0 0 19px; }
+
+.message {
+  display: block;
+  overflow: hidden;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 0 10px 0;
+  &:hover {
+    background: #f0f0f0; } }
