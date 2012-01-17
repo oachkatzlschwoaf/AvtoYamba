@@ -8,7 +8,7 @@
         <h3>Отписаться</h3>
     </div>
     <div class="modal-body">
-        <form action="{{ path('unsubscribe_phone', { 'number' : number } ) }}" id="unss-form" method="post" {{ form_enctype(form) }} class="form-stacked">
+        <form action="{{ path('unsubscribe_phone', { 'number' : number } ) }}" id="unss-form" method="post" {{ form_enctype(form) }} novalidate class="form-stacked">
             <div id="unss-alert" class="alert-message error hide" data-alert="alert" >
                 <p><b>Пичалька!</b> <span id="unss-error-text">Попробуйте еще раз :-(</span></p>
             </div>
