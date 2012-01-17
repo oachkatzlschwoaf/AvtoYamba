@@ -18,18 +18,21 @@
 				</h2>
 				<p>
 					<form method="post" action="{{ path('search_number') }}" id="go-number" data-original-title="Введите свой здесь номер автомобиля и нажмите Перейти">
-                        <div class="b-car-number">
-							<p class="c-car-number">
-								<span class="car-number">
-									<input maxlength="6" type="text" name="number" value="{% if number is not defined %}а101аа{% else %}{{ number }}{% endif %}">
-								</span>
-								<small class="car-region">
-									<input maxlength="3" type="text" name="number-region" value="{% if number is not defined %}199{% else %}{{ number }}{% endif %}">
-								</small>
-							</p>
-							
-                        </div>						
-                        <input type="submit" value="Узнать!">
+                        <span class="span4">
+							<span class="b-car-number">
+								<p class="c-car-number">
+									<span class="car-number">
+										<input maxlength="6" type="text" name="number" value="{% if number is not defined %}а101аа{% else %}{{ number }}{% endif %}">
+									</span>
+									<small class="car-region">
+										<input maxlength="3" type="text" name="number-region" value="{% if number is not defined %}199{% else %}{{ number }}{% endif %}">
+									</small>
+								</p>
+	                        </span>	
+						</span>	
+						<span class="span3">
+	                        <input type="submit" value="Узнать!">
+						</span>
                     </form>
 				</p>	
                 <a class="btn success" data-controls-modal="write-modal" data-backdrop="true">Написать сообщение!</a>
