@@ -12,10 +12,12 @@ use AY\GeneralBundle\Entity\Message;
 use AY\GeneralBundle\Entity\Notify;
 use AY\GeneralBundle\Entity\Subscribe;
 use AY\GeneralBundle\Entity\Util;
+use AY\GeneralBundle\Entity\SmsGate;
 
 # Forms
 use AY\GeneralBundle\Form\MessageType;
 use AY\GeneralBundle\Form\SubscribeType;
+use AY\GeneralBundle\Form\UnsubscribePhoneType;
 
 class DefaultController extends Controller {
     
@@ -77,6 +79,9 @@ class DefaultController extends Controller {
         # Create message form
         $form = $this->createForm(new MessageType());
 
+        # Create unsubsribe phone form
+        $form_unss = $this->createForm(new UnsubscribePhoneType());
+
         # Find messages by number
         $number = $req->get('number');
 
@@ -93,7 +98,7 @@ class DefaultController extends Controller {
         # Process form
         if ($req->getMethod() == 'POST') {
             $form_ss->bindRequest($req);
-            $answer = array('fail' => 1);
+            $answer = array('fail' => 'invalid_form');
 
             if ($form_ss->isValid()) {
                 # Create new subscribe
@@ -104,16 +109,74 @@ class DefaultController extends Controller {
                     return new Response( json_encode($answer) );
                 }
 
-                $subscribe = new Subscribe();
-                $subscribe->setNumber($number);
-                if ($email) 
+                # Check uniq
+                $ss_rep = $this->getDoctrine()->getRepository('AYGeneralBundle:Subscribe');
+                $ss_emails = array();
+                $ss_phones = array();
+
+                if ($email) {
+                    $q = $ss_rep->createQueryBuilder('p')
+                        ->where('p.number = :number and p.email = :email')
+                        ->setParameter('number', $number)
+                        ->setParameter('email', $email)
+                        ->getQuery();
+
+                    $ss_emails = $q->getResult();
+                }
+
+                if ($phone) {
+                    $util = new Util();
+                    $clean_phone = $util->cleanPhone($phone);
+
+                    $q = $ss_rep->createQueryBuilder('p')
+                        ->where('p.number = :number and p.phone = :phone')
+                        ->setParameter('number', $number)
+                        ->setParameter('phone', $clean_phone)
+                        ->getQuery();
+
+                    $ss_phones = $q->getResult();
+                }
+
+                if (count($ss_emails) > 0 && count($ss_phones) > 0) {
+                    $answer['fail'] = 'too_much_all';
+                    return new Response( json_encode($answer) );
+                }
+
+                if (!$phone && count($ss_emails) > 0) {
+                    $answer['fail'] = 'too_much_email';
+                    return new Response( json_encode($answer) );
+                }
+
+                if (!$email && count($ss_phones) > 0) {
+                    $answer['fail'] = 'too_much_phone';
+                    return new Response( json_encode($answer) );
+                }
+
+                # Save subscribe
+
+                if ($email && count($ss_emails) == 0) { 
+                    $subscribe = new Subscribe();
+
+                    $subscribe->setNumber($number);
                     $subscribe->setEmail($email);
-                if ($phone) 
+
+                    $em = $this->getDoctrine()->getEntityManager();
+                    $em->persist($subscribe);
+
+                    $em->flush();
+                }
+
+                if ($phone && count($ss_phones) == 0) { 
+                    $subscribe = new Subscribe();
+
+                    $subscribe->setNumber($number);
                     $subscribe->setPhone($phone);
 
-                $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($subscribe);
-                $em->flush();
+                    $em = $this->getDoctrine()->getEntityManager();
+                    $em->persist($subscribe);
+
+                    $em->flush();
+                }
 
                 # Flash message
                 $this->get('session')->setFlash('notice', 'Подписка сохранена!');
@@ -123,10 +186,6 @@ class DefaultController extends Controller {
                 return new Response( json_encode($answer) );
 
             } else {
-                $arr = $form_ss->getErrors();
-                print "FAIL\n";
-                var_dump($arr);
-
                 return new Response( json_encode($answer) );
 
             }
@@ -135,10 +194,11 @@ class DefaultController extends Controller {
         return $this->render(
             'AYGeneralBundle:Default:number.html.twig',
             array(
-                'number'   => $number,
-                'messages' => $messages,
-                'ss_form'  => $form_ss->createView(),
-                'form'     => $form->createView(),
+                'number'    => $number,
+                'messages'  => $messages,
+                'unss_form' => $form_unss->createView(),
+                'ss_form'   => $form_ss->createView(),
+                'form'      => $form->createView(),
             )
         );
 
@@ -336,6 +396,112 @@ class DefaultController extends Controller {
             array( 'number' => $number, 'format' => $format, 'sprite' => $sprite_name, 'num_off' => $ret_number, 
                    'reg_off' => $ret_region )
         );
+    }
+
+    public function unsubscribeEmailAction($number, $code) {
+        
+        $ss_rep = $this->getDoctrine()->getRepository('AYGeneralBundle:Subscribe');
+
+        $util = new Util();
+        $res = $util->decodeEmailCode($code, $ss_rep);
+
+        if ($res) {
+            $subscribe = $ss_rep->findOneById($res);
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->remove($subscribe);
+            $em->flush();
+
+            $this->get('session')->setFlash('unsubscribe_message', 'done');
+        } else {
+            $this->get('session')->setFlash('unsubscribe_message', 'fail');
+        }
+
+        return $this->redirect( $this->generateUrl('number', array( 'number' => $number )) );
+    }
+
+    public function unsubscribePhoneAction(Request $req) {
+        $number = $req->get('number');
+
+        $answer = array(); 
+        $answer['fail'] = 1;
+
+        $form_unss = $this->createForm(new UnsubscribePhoneType());
+
+        if ($req->getMethod() == 'POST') {
+            $form_unss->bindRequest($req);
+            $phone = $form_unss->get('phone')->getData();
+            $code  = $form_unss->get('code')->getData();
+
+            # Check phone 
+            $util = new Util();
+            $clean_phone = $util->cleanPhone($phone);
+
+            $ss_rep = $this->getDoctrine()->getRepository('AYGeneralBundle:Subscribe');
+
+            $q = $ss_rep->createQueryBuilder('p')
+                ->where('p.number = :number and p.phone = :phone')
+                ->setParameter('number', $number)
+                ->setParameter('phone', $clean_phone)
+                ->getQuery();
+
+            $ss_phones = $q->getResult();
+
+            if (count($ss_phones) == 0) {
+                $answer['fail'] = 'no_phone';
+                return new Response( json_encode($answer) );
+            }
+
+            $ss = $ss_phones[0];
+
+            if (!$code) {
+                # Generate code
+                $code = $util->generatePassword(4);
+                 
+                $ss->setCode($code);
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($ss);
+                $em->flush();
+
+                # Send code as sms
+                $sms = new SmsGate();
+                $sms->setLogin('avtoyamba@gmail.com'); # FIXIT: UNHARDCODE PLEASE
+                $sms->setPass('MVTSdFz');
+                $sms_answer = $sms->sendSms($clean_phone, $code);
+
+                if (!$sms_answer) {
+                    $answer['fail'] = 'broken_sms';
+
+                    return new Response( json_encode($answer) );
+                }
+
+                $answer['fail'] = 0;
+
+                return new Response( json_encode($answer) );
+
+            } else {
+                
+                $true_code = $ss->getCode();
+
+                if ($true_code == $code) {
+                    # Remove subscribe
+                    $em = $this->getDoctrine()->getEntityManager();
+                    $em->remove($ss);
+                    $em->flush();
+
+                    $answer['unsubscribe'] = 1;
+                    $answer['fail'] = 0;
+                    
+                } else {
+                    $answer['fail'] = 'incorrect_code';
+
+                }
+
+                return new Response( json_encode($answer) );
+
+            }
+        }
+
+        return new Response( json_encode($answer) );
     }
 
 }

@@ -125,21 +125,29 @@ sub getSubscribers {
     my ($messages, $d) = @_;
 
     my $ph = substr("?, " x scalar(keys %$messages), 0, -2);
-    my $query = "select id, number, email, phone from Subscribe where Number in ($ph)";
+    my $query = "select id, number, email, phone, unix_timestamp(created_at) from Subscribe where Number in ($ph)";
     my $eq = $d->prepare($query);
     my $rows = $eq->execute(keys %$messages);
 
     $rows = 0 if ($rows eq '0E0');
 
     my %subscribe;
+    my %secret_code;
     my $phones = 0;
     my $emails = 0;
 
     while (my @s = $eq->fetchrow_array) {
-        push( @{ $subscribe{ $s[1] }{'emails'} }, $s[2]) if ($s[2]); 
-        $emails++ if ($s[2]);
-        push( @{ $subscribe{ $s[1] }{'phones'} }, $s[3]) if ($s[3]); 
-        $phones++ if ($s[3]);
+        if ($s[2]) {
+            $subscribe{ $s[1] }{'emails'}{ $s[2] }{'u_t'} = $s[4]; 
+            $subscribe{ $s[1] }{'emails'}{ $s[2] }{'id'}  = $s[0]; 
+            $emails++; 
+        }
+
+        if ($s[3]) {
+            $subscribe{ $s[1] }{'phones'}{ $s[3] }{'u_t'} = $s[4]; 
+            $subscribe{ $s[1] }{'phones'}{ $s[3] }{'id'}  = $s[0]; 
+            $phones++;
+        }
     }
 
     INFO "Get $rows subscribers (emails: $emails, phones: $phones)\n"; 
@@ -156,17 +164,17 @@ sub sendNotify {
     foreach my $number (keys %$messages) {
         my $messages_by_number = $messages->{$number};
 
-        my $emails = $ss->{$number}{'emails'} || [];
-        my $phones = $ss->{$number}{'phones'} || [];
+        my $emails = $ss->{$number}{'emails'} || {};
+        my $phones = $ss->{$number}{'phones'} || {};
 
         foreach my $m (@$messages_by_number) {
             my $st = Time::HiRes::time();
 
-            if ($emails && scalar(@$emails) > 0) {
+            if ($emails && scalar(keys %$emails) > 0) {
                 sendEmail($emails, $m, $number, $config);
             }
 
-            if ($phones && scalar(@$phones) > 0) {
+            if ($phones && scalar(keys %$phones) > 0) {
                 sendSms($phones, $m, $number, $config);
             }
 
@@ -182,27 +190,32 @@ sub sendNotify {
 sub sendEmail {
     my ($emails, $message, $number, $config) = @_;
 
-    INFO "\t* Send ".scalar(@$emails)." emails for message ".$message->{'id'}.", number: '$number'";
+    INFO "\t* Send ".scalar(keys %$emails)." emails for message ".$message->{'id'}.", number: '$number'";
 
     # Compose email
     my $tconf = {
         INCLUDE_PATH => $config->{'tmpl_path'}, 
     };
 
-    my $tt = Template->new($tconf);
-
-    my $vars = {
-        number   => $number,
-        message  => $message,
-    };
-
-    my $out = '';
-    $tt->process('email.tt2', $vars, \$out)
-        || die $tt->error();
-
-    foreach my $email (@$emails) {
+    foreach my $email (keys %$emails) {
         INFO "\t- Send email to $email";
         my $st = Time::HiRes::time();
+
+        my $ut = $emails->{$email}{'u_t'};
+        my $id = $emails->{$email}{'id'};
+        my $code = makeSecretCode($id, $ut);
+
+        my $tt = Template->new($tconf);
+
+        my $vars = {
+            number   => $number,
+            message  => $message,
+            code     => $code,
+        };
+
+        my $out = '';
+        $tt->process('email.tt2', $vars, \$out)
+            || die $tt->error();
 
         my $msg = MIME::Lite->new(
             From    => $config->{'mail'}{'from'},
@@ -232,7 +245,7 @@ sub sendEmail {
 sub sendSms {
     my ($phones, $message, $number, $config) = @_;
 
-    INFO "\t* Begin send ".scalar(@$phones)." sms for message ".$message->{'id'}.", number: '$number'";
+    INFO "\t* Begin send ".scalar(keys %$phones)." sms for message ".$message->{'id'}.", number: '$number'";
 
     # Authorize
     # non-optiomal (try initialize in preconfig)
@@ -268,7 +281,7 @@ sub sendSms {
 
         my $sms_text = "Сообщение о '$number': '$text', читайте на http://avtoyamba.com/$number";
 
-        foreach my $phone (@$phones) {
+        foreach my $phone (keys %$phones) {
             # Send sms
             INFO "\t- Send sms to $phone";
 
@@ -311,5 +324,52 @@ sub markNotify {
     ERROR "\tMark result: FAIL\n" if ($rows == 0);
      
     return 1;
+}
+
+sub makeSecretCode {
+    my ($id, $ut) = @_;
+
+    my $str;
+
+    my $l  = length($id);
+
+    my @id_arr = split(//, $id);
+    my $id_sum = 0;
+    map { $id_sum += $_ } @id_arr;
+
+    $str = getRandString( 5, 5 + int(rand(5)) ); 
+    $str .= getRandString( 5, 5 + int(rand(5)) ); 
+
+    my $k = substr($str, $id_sum, 1); 
+    $k = 2 if ($k < 2);
+    $k = 5 if ($k > 5);
+    $k *= -1;
+
+    $str .= $l . $id; 
+
+    my $ut_part = substr($ut, $k);
+    my @ut_part_arr = split(//, $ut_part);
+    my $ut_part_sum = 0;
+    map { $ut_part_sum += $_ } @ut_part_arr;
+
+    $str .= $ut_part_sum;
+
+    $str .= getRandString( 5, 5 + int(rand(5)) ); 
+
+    return $str;
+}
+
+sub getRandString {
+    my ($from, $to) = @_;
+
+    my $iter = int(rand($to - $from + 1)) + $from; 
+    my $ret = $iter;
+
+    for (my $i = 0; $i < $iter; $i++) { 
+        my $r = int(rand(10));
+        $ret .= $r;
+    }
+    
+    return $ret;
 }
 
