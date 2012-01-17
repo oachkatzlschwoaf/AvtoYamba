@@ -22,6 +22,10 @@ AY\GeneralBundle\Entity\Subscribe:
       type: string
       length: 255
       nullable: true
+    code:
+      type: string
+      length: 255
+      nullable: true
     created_at:
       type: datetime
   lifecycleCallbacks: 

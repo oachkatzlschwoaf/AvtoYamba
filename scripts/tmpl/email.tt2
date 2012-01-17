@@ -5,6 +5,9 @@
 "[% message.text %] "
 
 Заходите чтобы прочитать:
-http://193.169.33.196/avto/app_dev.php/number/[% number %]
+http://avtoyamba.com/number/[% number %]
+
+Чтобы отписаться от этого щелкай:
+http://avtoyamba.com/unsubscribe/[% number %]/[% code %]
 
 Чмоке!

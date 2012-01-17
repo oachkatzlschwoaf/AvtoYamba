@@ -140,8 +140,14 @@ class Subscribe
      *
      * @param string $phone
      */
-    public function setPhone($phone)
-    {
+    public function setPhone($phone) {
+        # Clean phone
+        $phone = str_replace(' ', '', $phone);
+        $phone = preg_replace('/[^\d]/', '', $phone);
+
+        if (strlen($phone) > 10)
+            $phone = preg_replace('/^(7|8)/', '', $phone);
+
         $this->phone = $phone;
     }
 
@@ -170,8 +176,31 @@ class Subscribe
      *
      * @return datetime 
      */
-    public function getCreatedAt()
-    {
-        return $this->created_at;
+    public function getCreatedAt($format = null) {
+        if (!$format) {
+            return $this->created_at;
+        } elseif ($format == "date") {
+            return $this->created_at->format("Y-m-d");
+        } elseif ($format == "epoch") {
+            return $this->created_at->getTimestamp();
+        }
+    }
+
+    /**
+     * @ORM\prePersist
+     */
+    public function processPrePersist() {
+        $this->created_at = new \DateTime;
+        error_log("TIME!");
+        error_log( $this->created_at->getTimestamp() );
+        error_log( $this->created_at->format("H:i:s") );
+
+        if (!$this->getCountry()) {
+            $this->setCountry(0);
+        }
+
+        if (!$this->getNumberType()) {
+            $this->setNumberType(0);
+        }
     }
 }

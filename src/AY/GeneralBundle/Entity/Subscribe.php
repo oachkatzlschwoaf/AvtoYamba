@@ -176,9 +176,14 @@ class Subscribe
      *
      * @return datetime 
      */
-    public function getCreatedAt()
-    {
-        return $this->created_at;
+    public function getCreatedAt($format = null) {
+        if (!$format) {
+            return $this->created_at;
+        } elseif ($format == "date") {
+            return $this->created_at->format("Y-m-d");
+        } elseif ($format == "epoch") {
+            return $this->created_at->getTimestamp();
+        }
     }
 
     /**
@@ -186,6 +191,9 @@ class Subscribe
      */
     public function processPrePersist() {
         $this->created_at = new \DateTime;
+        error_log("TIME!");
+        error_log( $this->created_at->getTimestamp() );
+        error_log( $this->created_at->format("H:i:s") );
 
         if (!$this->getCountry()) {
             $this->setCountry(0);
@@ -194,5 +202,30 @@ class Subscribe
         if (!$this->getNumberType()) {
             $this->setNumberType(0);
         }
+    }
+    /**
+     * @var string $code
+     */
+    private $code;
+
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string 
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 }
