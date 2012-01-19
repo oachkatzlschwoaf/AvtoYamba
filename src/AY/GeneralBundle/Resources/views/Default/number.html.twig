@@ -166,7 +166,7 @@
     </div>
 {% endif %}
 
-<div class="container"> 
+<div class="container span7"> 
 
     <div class="content">
         <div id="ss-success" class="alert-message success hide">
@@ -199,7 +199,7 @@
         {% endif %}
 
         <div class="row">
-            <div class="span9">
+            <div class="span7">
                 <div style="margin-bottom: 5px">
                     {% render 'AYGeneralBundle:Default:showCarNumber' with { 'format' : 50, 'number' : number } %}
                 </div>
@@ -213,24 +213,26 @@
             </div>
 
 
-            <div class="span14" style="margin-bottom: 10px">
+            <div class="span7" style="margin-bottom: 10px">
                 <hr />
                 <h2>Последние записи:</h2>
             </div>
 
             {% if messages %}
-                <div class="span9">
+                <div class="span7 stream-item-container">
                     {% for m in messages %}
-                        <div data-id="{{ m.getId }}" class="message">
-                            <div style="float:left; overflow: hidden; margin-left: 5px; padding-left: 2px; width: 80%;">
-                                <h5 style="line-height: 16px">{{ m.getUserName() }}</h5>
-                                <p>
+						{% include 'AYGeneralBundle:Stream:item.html.twig' with{ 'message': m} %}
+                        <!-- <div data-id="{{ m.getId }}" class="stream-item">
+                            <div class="stream-item-post" style="float:left; overflow: hidden; margin-left: 5px; padding-left: 2px; width: 80%;">
+									<strong class="user" style="line-height: 16px">
+										{{ m.getUserName() }}
+									</strong>
+									<small class="date">{{ m.getCreatedAt('date') }}</small>
+                                <p class="message">
                                     {{ m.getText() }}
-                                    <br />
-                                    <small>{{ m.getCreatedAt('date') }}</small>
                                 </p>
                             </div>
-                            <div style="float: left; overflow: hidden; margin-left: 7px; width:75px;">
+                            <div class="stream-item-media" style="float: left; overflow: hidden; margin-left: 7px; width:75px;">
                                 {% if m.getImageThumb() %}
                                     <ul class="media-grid">
                                         <li>
@@ -241,7 +243,7 @@
                                     </ul>
                                 {% endif %}
                             </div>
-                        </div>
+                        </div> -->
                     {% endfor %}
 
                 </div>
