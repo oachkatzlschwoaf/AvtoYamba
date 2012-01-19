@@ -352,8 +352,12 @@ class Message
     public function getCreatedAt($format = null) {
         if (!$format) {
             return $this->created_at;
-        } elseif ($format == "date") {
+        } elseif ($format === "date") {
             return $this->created_at->format("Y-m-d");
+        } elseif ($format === "human") {
+            $ut = $this->created_at->getTimestamp();
+            $util = new Util;
+            return $util->getTwitterDate($ut);
         }
     }
 
