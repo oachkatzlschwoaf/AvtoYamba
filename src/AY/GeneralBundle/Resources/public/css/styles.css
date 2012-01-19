@@ -175,3 +175,40 @@ body {
 .message:hover {
     background: #f0f0f0; 
 }
+
+.message .user-info {
+	
+}
+
+.stream-item {
+	border-bottom: 1px solid #EEE;
+	padding: 0 0 15px 0;
+	margin: 0 0 15px 0;
+	clear: both;
+	overflow: hidden;
+}
+	.stream-item-header {
+		clear: both;
+		margin-bottom: 10px;
+	}
+	
+		.stream-item-header .stream-item-author {
+			font-size: 14px;
+		}
+
+		.stream-item-header .stream-item-time {
+			float: right;
+			color: #999;
+			font-size: 12px;
+		}
+	
+	.stream-item-media {
+/*		float: right;*/
+/*		height: 70px;*/
+		text-align: center;
+	}
+	
+	.stream-item-media .media-grid {
+		display: inline-block;
+	}
+	
