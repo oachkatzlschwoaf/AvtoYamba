@@ -1,0 +1,35 @@
+<div class="stream-item">	
+	<div class="stream-item-header">
+		<strong class="user-name stream-item-author">
+			{{ message.getUserName() }}
+		</strong>
+		{% if show_all %}
+		<span class="stream-item-car-number">
+		пишет о {% render 'AYGeneralBundle:Default:showCarNumber' with { 'format' : 25, 'number' : message.getNumber } %}
+		</span>
+		{% endif %}
+		<small class="date stream-item-time">
+			{{ message.getCreatedAt('date') }}
+		</small>
+	</div>
+	
+	<p class="stream-item-text">
+		{{ message.getText() }}
+	</p>
+
+	{% if message.getImageThumb() %}
+	<div class="stream-item-media">
+       	<ul class="media-grid">
+            <li>
+                 <a target="_blank" href="{{ message.getImage() }}:large">
+                     <img src="{{ message.getImage() }}:small" />
+                 </a>
+             </li>
+         </ul>
+	</div>
+	{% endif %}
+	
+	{% if message.getNumber and show_all %}
+	<a href="{{ path('number', { 'number' : message.getNumber } ) }}">Другие сообщения о {{ message.getNumber }}  &rarr;</a>
+	{% endif %}
+</div>

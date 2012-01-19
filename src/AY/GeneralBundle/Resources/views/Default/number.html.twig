@@ -166,40 +166,38 @@
     </div>
 {% endif %}
 
-<div class="container span7"> 
+<div class="span7 container content"> 
+		<div class="content-block">
+	        <div id="ss-success" class="alert-message success hide">
+	            <a class="close" href="#">&times;</a>
+	            <p><b>Ура!</b> Подписка успешно сохранена!</p>
+	        </div>
 
-    <div class="content">
-        <div id="ss-success" class="alert-message success hide">
-            <a class="close" href="#">&times;</a>
-            <p><b>Ура!</b> Подписка успешно сохранена!</p>
-        </div>
+	        <div id="unss-phone-success" class="alert-message success hide">
+	            <a class="close" href="#">&times;</a>
+	            <p>Подписка успешно отменена!</p>
+	        </div>
 
-        <div id="unss-phone-success" class="alert-message success hide">
-            <a class="close" href="#">&times;</a>
-            <p>Подписка успешно отменена!</p>
-        </div>
+	        {% if app.session.hasFlash('unsubscribe_message') %}
 
-        {% if app.session.hasFlash('unsubscribe_message') %}
+	            {% if app.session.flash('unsubscribe_message') == 'done' %}
+	                <div id="unss-success" class="alert-message success">
+	                    <a class="close" href="#">&times;</a>
+	                    <p><b>Успех!</b> Подписка удалена!</p>
+	                </div>
+	            {% else %}
+	                <div id="unss-success" class="alert-message error">
+	                    <a class="close" href="#">&times;</a>
+	                    <p><b>Пичалька!</b> Такой подписки нет!</p>
+	                </div>
+	            {% endif %}
 
-            {% if app.session.flash('unsubscribe_message') == 'done' %}
-                <div id="unss-success" class="alert-message success">
-                    <a class="close" href="#">&times;</a>
-                    <p><b>Успех!</b> Подписка удалена!</p>
-                </div>
-            {% else %}
-                <div id="unss-success" class="alert-message error">
-                    <a class="close" href="#">&times;</a>
-                    <p><b>Пичалька!</b> Такой подписки нет!</p>
-                </div>
-            {% endif %}
-
-            <script>
-                $("#unss-success").alert();
-            </script>
-        {% endif %}
-
-        <div class="row">
-            <div class="span7">
+	            <script>
+	                $("#unss-success").alert();
+	            </script>
+	        {% endif %}
+			</div>
+            <div class="separated-block content-block">
                 <div style="margin-bottom: 5px">
                     {% render 'AYGeneralBundle:Default:showCarNumber' with { 'format' : 50, 'number' : number } %}
                 </div>
@@ -212,48 +210,9 @@
 
             </div>
 
-
-            <div class="span7" style="margin-bottom: 10px">
-                <hr />
-                <h2>Последние записи:</h2>
-            </div>
-
-            {% if messages %}
-                <div class="span7 stream-item-container">
-                    {% for m in messages %}
-						{% include 'AYGeneralBundle:Stream:item.html.twig' with{ 'message': m} %}
-                        <!-- <div data-id="{{ m.getId }}" class="stream-item">
-                            <div class="stream-item-post" style="float:left; overflow: hidden; margin-left: 5px; padding-left: 2px; width: 80%;">
-									<strong class="user" style="line-height: 16px">
-										{{ m.getUserName() }}
-									</strong>
-									<small class="date">{{ m.getCreatedAt('date') }}</small>
-                                <p class="message">
-                                    {{ m.getText() }}
-                                </p>
-                            </div>
-                            <div class="stream-item-media" style="float: left; overflow: hidden; margin-left: 7px; width:75px;">
-                                {% if m.getImageThumb() %}
-                                    <ul class="media-grid">
-                                        <li>
-                                            <a target="_blank" href="{{ m.getImage() }}:large">
-                                                <img src="{{ m.getImageThumb() }}" style="width: 60px; height: 60px;" />
-                                            </a>
-                                        </li>
-                                    </ul>
-                                {% endif %}
-                            </div>
-                        </div> -->
-                    {% endfor %}
-
-                </div>
-
-            {% else %}
-                а про него еще никто ничего не сказал :-)
-            {% endif %}
-
+		<div class="content-block content-block-no-padding">
+			{% include 'AYGeneralBundle:Stream:StreamItemsList.html.twig' with { 'messages' : messages, 'heading' : 'Последние записи:' } %}
         </div>
-    </div>
 </div>
 
 {% endblock %}

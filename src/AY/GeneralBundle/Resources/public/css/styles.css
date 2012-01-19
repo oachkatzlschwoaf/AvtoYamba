@@ -17,16 +17,32 @@ body {
     margin: -20px -20px 20px;
 }
 
+.separated-block {
+	border-bottom: 1px solid #EEE;
+	margin: 10px 0;
+	padding: 20px 0;
+}
+
+.content-block {
+	background-color: #fff;
+	padding: 20px;
+}
+
 .content {
     background-color: #fff;
-    padding: 20px;
-    margin: 40px -20px; /* negative indent the amount of the padding to maintain the grid system */
+
+/*    margin: 40px -20px; /* negative indent the amount of the padding to maintain the grid system */*/
+	margin: 20px;
     -webkit-border-radius: 0 0 6px 6px;
     -moz-border-radius: 0 0 6px 6px;
     border-radius: 0 0 6px 6px;
     -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
     box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+
+.content-block-no-padding {
+	padding: 0;
 }
 
 .top-fill {
@@ -52,53 +68,66 @@ body {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
-.number_25 {
-    padding-left: 8px;
+.car-number, .car-number-region, .car-number-num, .car-number-reg, .car-number-chr {
+	display: inline-block;
 }
 
-.number_25 .region {
+.car-number {
+}
+
+.car-number-25 {
+    padding-left: 8px;
+	width: 108px;
+	height: 25px;
+	background: url('http://avtoyamba.com/images/115x25_sprite.png') 0 25px;
+}
+
+.car-number-25 .car-number-region {
     margin-left: 8px;
     overflow: hidden;
     float: left;
 }
 
-.number_25 .num {
+.car-number-25 .car-number-num {
     float: left;
     position: relative;
     top: 3px;
 }
 
-.number_25 .chr {
+.car-number-25 .car-number-chr {
     top: 8px;
 }
 
-.number_25 .reg {
+.car-number-25 .car-number-reg {
     float: left;
     position: relative;
     top: 2px;
 }
 
-.number_50 {
+.car-number-50 {
     padding-left: 17px;
+	width: 208px;
+	height: 50px;
+	background: url('http://avtoyamba.com/images/225x50_sprite.png') 0 50px;
 }
 
-.number_50 .region {
+.car-number-50 .car-number-region {
     margin: 2px 0 0 13px;
     overflow: hidden;
     float: left;
 }
 
-.number_50 .num {
+.car-number-50 .car-number-num {
     float: left;
     position: relative;
     top: 3px;
 }
 
-.number_50 .chr {
+.car-number-50 .car-number-chr {
     top: 8px;
 }
 
-.number_50 .reg {
+.car-number-50 .car-number-reg {
     float: left;
     position: relative;
     top: 2px;
@@ -180,9 +209,13 @@ body {
 	
 }
 
+.stream-item-container h2 {
+	padding: 0 20px;
+}
+
 .stream-item {
 	border-bottom: 1px solid #EEE;
-	padding: 0 0 15px 0;
+	padding: 20px 20px 15px;
 	margin: 0 0 15px 0;
 	clear: both;
 	overflow: hidden;
@@ -190,6 +223,8 @@ body {
 	.stream-item-header {
 		clear: both;
 		margin-bottom: 10px;
+		position: relative;
+		line-height: 25px;
 	}
 	
 		.stream-item-header .stream-item-author {
@@ -197,9 +232,19 @@ body {
 		}
 
 		.stream-item-header .stream-item-time {
+/*			position: absolute;
+			right: 0;
+			top: 3px;
+*/			
 			float: right;
 			color: #999;
 			font-size: 12px;
+			line-height: 25px;
+		}
+		
+		.stream-item-header .car-number {
+			position: relative;
+			margin-bottom: -8px;
 		}
 	
 	.stream-item-media {
