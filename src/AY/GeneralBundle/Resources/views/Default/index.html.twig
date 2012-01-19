@@ -2,10 +2,10 @@
 
 {% block body %}
 
-<div class="container span9"> 
-    <div class="content">
+<div class="container span7"> 
+    <!-- <div class="span7 content">
         <div class="row">
-            <div class="span9">
+            <div class="span7">
                 <h2>Что это такое?</h2>
                 <p style="height: 100px">
                     АвтоЩито? АвтоЯмба! Это сервис с помощью которого можно БЕЗ регистрации анонимно отправлять сообщения на номера автомобилей!
@@ -18,75 +18,18 @@
 				</h2>
 				<p>
 				
-													<!-- <form method="post" action="{{ path('search_number') }}" id="go-number" data-original-title="Введите свой здесь номер автомобиля и нажмите Перейти">
-																                        <span class="span4">
-																							<span class="b-car-number">
-																								<p class="c-car-number">
-																									<span class="car-number">
-																										<input maxlength="6" type="text" name="number" value="{% if number is not defined %}а101аа{% else %}{{ number }}{% endif %}">
-																									</span>
-																									<small class="car-region">
-																										<input maxlength="3" type="text" name="number-region" value="{% if number is not defined %}199{% else %}{{ number }}{% endif %}">
-																									</small>
-																								</p>
-																	                        </span>	
-																						</span>	
-																						<span class="span3">
-																	                        <input type="submit" value="Узнать!">
-																						</span>
-																                    </form>
-																 -->
+												
 				</p>	
                 <a class="btn success" data-controls-modal="write-modal" data-backdrop="true">Написать сообщение!</a>
                 <a class="btn primary" id="search-number">Найти сообщения по номеру</a>
             </div>
             <div class="span5">
             </div>
-
-            <div class="span14" style="margin-bottom: 10px">
-                <hr />
-                <h2>Последние записи:</h2>
-            </div>
-
-            {% if messages %}
-                <div class="span10">
-                    {% for m in messages %}
-                            <div data-id="{{ m.getId }}" class="message">
-                                <div style="float:left; overflow: hidden; margin: 2px 0px 0px 2px">
-                                    <a href="{{ path('number', { 'number' : m.getNumber } ) }}" style="display: block; overflow: hidden;">
-                                        {% render 'AYGeneralBundle:Default:showCarNumber' with { 'format' : 25, 'number' : m.getNumber() } %}
-                                    </a>
-                                </div>
-                                <div style="float:left; overflow: hidden; margin-left: 5px; padding-left: 2px; width: 62%;">
-                                    <h5 style="line-height: 16px">{{ m.getUserName() }}</h5>
-                                    <p>
-                                        {{ m.getText() }}
-                                        <br />
-                                        <small>{{ m.getCreatedAt('date') }}</small>
-                                    </p>
-                                    <p style="min-height: 20px; margin-top: 0px">
-                                        <small class="menu_small hide" id="menu_m_{{ m.getId() }}">
-                                            <a href="{{ path('number', { 'number' : m.getNumber } ) }}">Другие сообщения &rarr;</a>
-                                        </small>
-                                    </p>
-                                </div>
-                                <div style="float: left; overflow: hidden; margin-left: 7px; width:75px;">
-                                    {% if m.getImageThumb() %}
-                                        <ul class="media-grid">
-                                            <li>
-                                                <a target="_blank" href="{{ m.getImage() }}:large">
-                                                    <img src="{{ m.getImageThumb() }}" style="width: 60px; height: 60px;" />
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    {% endif %}
-                                </div>
-                            </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-
-    </div>
+</div> -->
+			<div class="span7 content content-no-padding separated-block">	
+				{% include 'AYGeneralBundle:Stream:StreamItemsList.html.twig' with { 'messages' : messages, 'heading' : 'Последние записи:', 'show_all' : true } %}
+			</div>
+</div>
 
 </div> <!-- /container -->
 
