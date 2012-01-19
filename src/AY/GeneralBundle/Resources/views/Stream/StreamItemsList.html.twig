@@ -1,0 +1,17 @@
+{% if show_all is not defined %}
+	{% set show_all = false %}
+{% endif %}
+<div class="stream-item-container">
+	{% if heading is defined %}
+	<h2>
+		{{ heading }}
+	</h2>
+	{% endif %}
+	{% if messages %}
+		{% for message in messages %}
+			{% include 'AYGeneralBundle:Stream:StreamItem.html.twig' with{ 'message': message, 'show_all' : show_all } %}
+	    {% endfor %}
+	{% else %}
+        а про него еще никто ничего не сказал :-)
+    {% endif %}
+</div>
