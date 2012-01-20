@@ -12,6 +12,10 @@
 			{% include 'AYGeneralBundle:Stream:StreamItem.html.twig' with{ 'message': message, 'show_all' : show_all } %}
 	    {% endfor %}
 	{% else %}
-        а про него еще никто ничего не сказал :-)
+		<div class="stream-item stream-item-empty">
+			<p>
+        		а про него еще никто ничего не сказал :-)				
+			</p>
+		</div>	
     {% endif %}
 </div>

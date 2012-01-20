@@ -224,7 +224,7 @@ body {
 }
 	.stream-item-header {
 		clear: both;
-		margin-bottom: 10px;
+/*		margin-bottom: 10px;*/
 		position: relative;
 		line-height: 25px;
 	}
@@ -261,5 +261,9 @@ body {
 	
 	.stream-item-media .media-grid {
 		display: inline-block;
+	}
+	
+	.stream-item-empty {
+		border: 0;
 	}
 	
