@@ -1,0 +1,78 @@
+<html>
+<head>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+<script>
+    function deleteMessage(id) {
+        var q = '#ms-' + id;
+        //if (confirm('Точно?')) {
+            $.post(
+                '{{ path('delete_message') }}',
+                { 'id': id },
+                function (data) {
+                    console.log(data);
+
+                    if (data.done == 1) {
+                        $(q).hide();
+                    } else {
+                        $(q).css('background', '#f0aaaa');
+                    }
+                }, "json"
+            );
+        //}
+    }
+</script>
+
+<div style="margin: 10px; border: 1px solid black; width: 30%; padding: 5px; background: #f2e8c9">
+    <b>Последний</b>: {{ last_moderated_id }}
+</div>
+
+<div class="container"> 
+    <div class="content">
+        <div class="row">
+            {% set max_id = 0 %}
+            {% if messages %}
+                <div class="span6" style="width: 40%;">
+                    {% for m in messages %}
+                        {% if m.id > max_id %} {% set max_id = m.id %} {% endif %}
+                        <a name="#m{{ m.id }}"></a>
+                        <div id="ms-{{ m.id }}" class="message" style="border: 1px solid black; padding: 10px; background: #ddd; margin-bottom: 30px;">
+                            <div><b>{{ m.getId }}.</b> <span style="color: #777777">{{ m.getCreatedAt('date_time') }}</span></div>
+
+                            <div style="margin-top: 10px; padding: 5px; width: 200px;">
+                                <span style="color: #701515">
+                                    <b>{{ m.getUserName() }}</b>
+                                </span>
+                                =>
+                                <b>{{ m.getNumber() }}</b>
+                            </div>
+
+                            <div style="border: 1px solid #999999; background: #eee; margin-top: 10px; padding: 10px;">
+                                {{ m.getText() }}
+                            </div>
+
+                            <div style="margin-top: 10px">
+                                {% if m.getImage() %}
+                                    <img src="{{ m.getImage() }}:small" />
+                                {% endif %}
+                            </div>
+                        
+                            <a href="#m{{ m.id }}" onclick="deleteMessage('{{ m.id }}')" style="display: block; width: 100px; text-align: center; background: #ebc7c7; border: 1px solid #b05454; margin-top: 10px; padding: 7px; color: #7a1010">удалить</a>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <a href="{{ path('admin_moderate_messages', { 'next': max_id } ) }}" style="display: block; margin: 10px; border: 1px solid black; width: 30%; padding: 10px; background: #c6f0aa; color: #3c6223">
+                    Сохранить!
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

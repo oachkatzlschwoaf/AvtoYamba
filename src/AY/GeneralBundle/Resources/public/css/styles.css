@@ -251,6 +251,7 @@ body {
 		
 	.stream-item-text {
 		font-size: 15px;
+        margin: 7px 0px 11px 0px;
 	}	
 	
 	.stream-item-media {
