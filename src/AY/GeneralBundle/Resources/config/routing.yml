@@ -22,6 +22,17 @@ unsubscribe_phone:
     pattern:  /unsubscribe_phone/{number}
     defaults: { _controller: AYGeneralBundle:Default:unsubscribePhone }
 
+delete_message:
+    pattern: /message/delete
+    defaults: { _controller: AYGeneralBundle:Default:deleteMessage }
+
+# Admin
+
+admin_moderate_messages:
+    pattern:  /admin/moderate
+    defaults: { _controller: AYGeneralBundle:Default:moderateMessages }
+
+
 # API
 
 api_post_message:

@@ -354,6 +354,8 @@ class Message
             return $this->created_at;
         } elseif ($format === "date") {
             return $this->created_at->format("Y-m-d");
+        } elseif ($format === "date_time") {
+            return $this->created_at->format("Y-m-d H:i");
         } elseif ($format === "human") {
             $ut = $this->created_at->getTimestamp();
             $util = new Util;

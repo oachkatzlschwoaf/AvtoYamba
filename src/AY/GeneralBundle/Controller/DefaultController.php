@@ -13,6 +13,7 @@ use AY\GeneralBundle\Entity\Notify;
 use AY\GeneralBundle\Entity\Subscribe;
 use AY\GeneralBundle\Entity\Util;
 use AY\GeneralBundle\Entity\SmsGate;
+use AY\GeneralBundle\Entity\Config;
 
 # Forms
 use AY\GeneralBundle\Form\MessageType;
@@ -497,6 +498,95 @@ class DefaultController extends Controller {
                 }
 
                 return new Response( json_encode($answer) );
+
+            }
+        }
+
+        return new Response( json_encode($answer) );
+    }
+
+    public function moderateMessagesAction(Request $req) {
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        # Get last moderated id
+        $rep = $this->getDoctrine()->getRepository('AYGeneralBundle:Config');
+        $q = $rep->createQueryBuilder('p')
+            ->where('p.parameter = :parameter')
+            ->setParameter('parameter', 'moderated_id')
+            ->getQuery();
+         
+        $config_val     = $q->getResult();
+        $last_moderated = 0;
+
+        if (count($config_val) > 0) {
+            $last_moderated = $config_val[0]->getValue();
+        } else {
+            $config = new Config();
+            $config->setParameter('moderated_id');
+            $config->setValue(0);
+
+            $em->persist($config);
+            $em->flush();
+        }
+
+
+        $next = $req->get('next');
+        if ($next && $next > $last_moderated) {
+            $last_moderated = $next;
+
+            $rep = $this->getDoctrine()->getRepository('AYGeneralBundle:Config');
+            $q = $rep->createQueryBuilder('p')
+                ->where('p.parameter = :parameter')
+                ->setParameter('parameter', 'moderated_id')
+                ->getQuery();
+             
+            $config_val = $q->getSingleResult();
+            $config_val->setValue($next);
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($config_val);
+            $em->flush();
+        }
+
+
+        # Get messages to moderate
+        $query = $em->createQuery(
+            'select p from AYGeneralBundle:Message p where p.id > :last_moderated order by p.id desc'
+        )->setParameter('last_moderated', $last_moderated)
+         ->setMaxResults(10);
+
+        $messages = $query->getResult();
+        
+
+        return $this->render(
+            'AYGeneralBundle:Default:admin_moderate.html.twig',
+            array(
+                'last_moderated_id' => $last_moderated,    
+                'messages'          => $messages,
+            )
+        );
+
+    }
+
+    public function deleteMessageAction(Request $req) {
+        $answer = array();
+
+        if ($req->getMethod() == 'POST') {
+            $id = $req->get('id');
+
+            $message = $this->getDoctrine()
+                ->getRepository('AYGeneralBundle:Message')
+                ->find($id);
+
+            if (isset($message)) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->remove($message);
+                $em->flush();
+
+                $answer['done'] = 1;
+            } else {
+                $answer['fail'] = 1;
 
             }
         }
