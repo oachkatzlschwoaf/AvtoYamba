@@ -6,7 +6,22 @@ body {
     padding-top: 20px; /* to make the container go all the way to the bottom of the topbar */
 }
 
-.header {}
+.header {
+}
+	.header-navigation {
+		position: relative;
+	}
+	
+	.header-navigation .header-logo {
+		position: absolute;
+		top: 0;
+		left: -65px;
+		display: block;
+		background: url('/images/logo.png') no-repeat;
+		width: 173px;
+		height: 58px;
+	}
+	
 	.header .navigation {
 		float: right;
 	}
