@@ -6,6 +6,18 @@ body {
     padding-top: 20px; /* to make the container go all the way to the bottom of the topbar */
 }
 
+.header {}
+	.header .navigation {
+		float: right;
+	}
+	
+
+	.header-navigation .header-actions {
+		padding-top: 5px;
+		float: right;
+		text-align: right;
+	}
+
 .container {
 
 }
@@ -47,7 +59,7 @@ body {
     box-shadow: 0 1px 2px rgba(0,0,0,.15);
 }
 
-.top-fill {
+.header {
     background-color: #999;
     background-color: #999999;
     background-repeat: repeat-x;
@@ -211,6 +223,32 @@ body {
 	
 }
 
+.car-number-details {
+	
+}
+	.car-number-details .car-number {
+
+	}
+	
+	.car-number-details .car-number-stream-info {
+		float: right;
+		
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	
+	.car-number-details .car-number-stream-info .car-number-stream-info-item {
+		margin: 0;
+		padding: 0;
+		display: block;
+		text-align: right;
+	}
+	
+	.car-number-details .car-number-stream-info .car-number-stream-info-item .subscribe-button {
+		margin-top: 10px;
+	}
+
 .stream-item-container h2 {
 	padding: 0 20px;
 }
@@ -222,6 +260,11 @@ body {
 	clear: both;
 	overflow: hidden;
 }
+
+	.stream-item:hover {
+		
+	}
+
 	.stream-item-header {
 		clear: both;
 /*		margin-bottom: 10px;*/

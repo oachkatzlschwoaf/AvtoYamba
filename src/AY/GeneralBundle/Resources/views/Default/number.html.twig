@@ -198,16 +198,31 @@
 	        {% endif %}
 			</div>
             <div class="separated-block content-block">
-                <div style="margin-bottom: 5px">
-                    {% render 'AYGeneralBundle:Default:showCarNumber' with { 'format' : 50, 'number' : number } %}
-                </div>
-
-                <p><small>Вы можете получать новые сообщения на мобильный</small></p>
-
-                <a class="btn success" data-controls-modal="write-modal" data-backdrop="true">Написать сообщение!</a>
-                <a class="btn primary" data-controls-modal="subscribe-modal" data-backdrop="true">Подписаться</a>
-                <a class="btn default" data-controls-modal="unsubscribe-phone-modal" data-backdrop="true">Отписаться</a>
-
+				<div class="row car-number-details">
+					<div class="span4">
+						{% render 'AYGeneralBundle:Default:showCarNumber' with { 'format' : 50, 'number' : number } %}
+					</div>
+					<ul class="span3 car-number-stream-info">
+						<li class="car-number-stream-info-item">
+							{{ messages|length }} 
+							{% transchoice messages|length %}
+							    {1} упоминание | [2,4] упоминания | [5,Inf] упоминаний
+							{% endtranschoice %}
+						</li>
+						<li class="car-number-stream-info-item">
+							{% set messagesWithPic = 0 %}
+							{% for message in messages %}
+								{% if message.getImageThumb() %}
+									{% set messagesWithPic = messagesWithPic + 1 %}
+								{% endif %}
+							{% endfor %}
+							{{ messagesWithPic }} фото
+						</li>
+						<li class="car-number-stream-info-item">
+			                <a class="btn primary subscribe-button" data-controls-modal="subscribe-modal" data-backdrop="true">Подписка</a>
+						</li>
+					</ul>
+				</div>
             </div>
 
 		<div class="content-block content-block-no-padding">

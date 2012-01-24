@@ -64,22 +64,10 @@
             </div>
             </form>
         </div>
-
-        <div class="topbar">
-            <div class="top-fill">
-                <div class="container" style="height: 42px">
-                    <div style='float: left; width: 490px;'>
-                        <a style='overflow: hidden; display: block;' href="{{ url('homepage') }}"><img src="http://avtoyamba.com/images/logo.png" /></a>
-                    </div>
-
-                    <form method="post" action="{{ path('search_number') }}" id="go-number" data-original-title="Введите свой здесь номер автомобиля и нажмите Перейти">
-                        <input type="text" name="number" value="{% if number is not defined %}а101аа199{% else %}{{ number }}{% endif %}"> 
-                        <input type="submit" value="Перейти">
-                    </form>
-                </div>
-            </div>
-        </div>
-
+		
+		<div class="header topbar">
+			{% include 'AYGeneralBundle:Layout:HeaderNavigation.html.twig' %}
+		</div>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
 

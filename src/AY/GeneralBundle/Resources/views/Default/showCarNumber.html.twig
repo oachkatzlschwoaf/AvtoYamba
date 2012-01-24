@@ -1,4 +1,11 @@
-<div class="car-number car-number-{{ format }}">
+{% if format == 25 %}
+{% set tag = "a" %}
+{% set linkToNumber = true %}
+{% else %}
+{% set tag = "div" %}
+{% set linkToNumber = false %}
+{% endif %}
+<{{tag}} {% if linkToNumber %}href="{{ path('number', { 'number' : number })}}"{% endif %} class="car-number car-number-{{ format }}">
     {% for n_o in num_off %}
         <div class="car-number-num {% if (loop.index < 2 or loop.index > 4) %}car-number-chr{% endif %}" style="background: url('http://avtoyamba.com/images/{{ sprite }}') {{ n_o.0 }}px {{ n_o.1 }}px; width: {{ n_o.2 }}px; height: {{ n_o.3 }}px;"></div>
     {% endfor  %}
@@ -7,4 +14,4 @@
             <div class="car-number-reg" style="background: url('http://avtoyamba.com/images/{{ sprite }}') {{ n_o.0 }}px {{ n_o.1 }}px; width: {{ n_o.2 }}px; height: {{ n_o.3 }}px;"></div>
         {% endfor  %}
     </div>
-</div>
+</{{tag}}>
