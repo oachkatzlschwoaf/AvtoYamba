@@ -144,6 +144,7 @@ body {
     margin: 2px 0 0 13px;
     overflow: hidden;
     float: left;
+    border: 1px solid red;
 }
 
 .car-number-50 .car-number-num {
@@ -157,6 +158,35 @@ body {
 }
 
 .car-number-50 .car-number-reg {
+    float: left;
+    position: relative;
+    top: 2px;
+}
+
+.car-number-18 {
+    padding-left: 7px;
+	width: 83px;
+	height: 18px;
+	background: url('http://avtoyamba.com/images/83x18_sprite.png') 0 -45px;
+}
+
+.car-number-18 .car-number-region {
+    margin-left: 3px;
+    overflow: hidden;
+    float: left;
+}
+
+.car-number-18 .car-number-num {
+    float: left;
+    position: relative;
+    top: 3px;
+}
+
+.car-number-18 .car-number-chr {
+    top: 5px;
+}
+
+.car-number-18 .car-number-reg {
     float: left;
     position: relative;
     top: 2px;

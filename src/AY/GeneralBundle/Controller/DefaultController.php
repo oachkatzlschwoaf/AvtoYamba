@@ -289,6 +289,8 @@ class DefaultController extends Controller {
 
         if ($format == 50) {
             $sprite_name = '225x50_sprite.png';
+        } elseif ($format == 18) {
+            $sprite_name = '83x18_sprite.png';
         }
 
         $trans = array(
@@ -366,6 +368,44 @@ class DefaultController extends Controller {
                     8 => array(  -180,   -40, 16, 30),
                     9 => array(  -205,   -40, 16, 30),
                     0 => array(  -230,   -40, 16, 30),
+                ),
+            ),
+            18 => array(
+                'gen' => array(
+                    1 => array(    -2,     0, 8, 13), 
+                    2 => array(   -12,     0, 8, 13),
+                    3 => array(   -22,     0, 8, 13),
+                    4 => array(   -32,     0, 8, 13),
+                    5 => array(   -42,     0, 8, 13),
+                    6 => array(   -52,     0, 8, 13),
+                    7 => array(   -62,     0, 8, 13),
+                    8 => array(   -72,     0, 8, 13),
+                    9 => array(   -82,     0, 8, 13),
+                    0 => array(   -92,     0, 8, 13),
+                    'a' => array(  -2,   -23, 8, 11),
+                    'b' => array( -12,   -23, 8, 11),
+                    'e' => array( -22,   -23, 8, 11),
+                    'k' => array( -32,   -23, 8, 11),
+                    'm' => array( -42,   -23, 8, 11),
+                    'h' => array( -52,   -23, 8, 11),
+                    'o' => array( -62,   -23, 8, 11),
+                    'p' => array( -72,   -23, 8, 11),
+                    'c' => array( -82,   -23, 8, 11),
+                    't' => array( -92,   -23, 8, 11),
+                    'y' => array(  -2,   -34, 8, 11),
+                    'x' => array( -12,   -34, 8, 11),
+                ),
+                'reg' => array(
+                    1 => array(     0,   -13, 7, 10), 
+                    2 => array(   -10,   -13, 7, 10),
+                    3 => array(   -20,   -13, 7, 10),
+                    4 => array(   -30,   -13, 7, 10),
+                    5 => array(   -40,   -13, 7, 10),
+                    6 => array(   -50,   -13, 7, 10),
+                    7 => array(   -60,   -13, 7, 10),
+                    8 => array(   -70,   -13, 7, 10),
+                    9 => array(   -80,   -13, 7, 10),
+                    0 => array(   -90,   -13, 7, 10),
                 ),
             )
         );
