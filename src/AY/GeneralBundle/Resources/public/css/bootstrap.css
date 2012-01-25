@@ -2197,6 +2197,14 @@ button.btn::-moz-focus-inner, input[type=submit].btn::-moz-focus-inner {
   -moz-background-clip: padding-box;
   background-clip: padding-box;
 }
+
+.absolute-modal {
+	position: absolute;
+	margin: 0;
+	top: auto;
+	left: auto;
+}
+
 .modal .close {
   margin-top: 7px;
 }

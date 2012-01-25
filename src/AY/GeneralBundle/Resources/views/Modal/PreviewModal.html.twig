@@ -1,4 +1,4 @@
-<div id="pic-preview-modal" class="modal hide fade">
+<div id="pic-preview-modal" class="modal hide fade media-preview-modal">
     <div class="modal-body">
 		контент окна
     </div>
@@ -15,7 +15,28 @@ $('body').delegate('[data-controls-dynamic-modal]', 'click', function (e) {
 			'<img src="' + $this.data().content + '" alt="" />'
 		].join('')
 	);
-
+	
 	$('#' + $this.attr('data-controls-dynamic-modal')).modal( $this.data() );
+	if(!this.binded){
+		$('#' + $this.attr('data-controls-dynamic-modal')).bind('pre-show', function(){
+			var $this = $(this);
+			var c = $this.children('.modal-body');
+			var mh = parseInt($this.css('max-height'));
+			var s = {
+				h: c[0].offsetHeight,
+				w: c[0].offsetWidth
+			};
+			
+			$this.css({
+				height: s.h,
+				width: s.w,
+				marginLeft: s.w / -2, 
+				marginTop: (s.h > mh ? mh : s.h) / -2 				
+			});
+				
+		});
+		this.binded = true;
+	}
 });
+
 </script> 

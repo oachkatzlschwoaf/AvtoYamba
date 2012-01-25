@@ -355,3 +355,8 @@ body {
 		border: 0;
 	}
 	
+.media-preview-modal {
+}
+.media-preview-modal .modal-body {
+	display: inline-block;
+}
