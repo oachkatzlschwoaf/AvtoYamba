@@ -45,6 +45,8 @@
 	width: 100%;
 	z-index: 999999;
 	display: none;
+	background: black !important;
+	opacity: 0.8 !important;
 }
 
 #fancybox-tmp {
