@@ -10,6 +10,8 @@ $('body').delegate('[data-controls-dynamic-modal]', 'click', function (e) {
 	if(!$this.data().content){
 		return false;
 	}
+	
+	new Image().src = $this.data().content;
 
 	$('#' + $this.attr('data-controls-dynamic-modal') + ' .modal-body').html([
 			'<img src="' + $this.data().content + '" alt="" />'
