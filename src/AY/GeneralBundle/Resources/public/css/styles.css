@@ -15,11 +15,11 @@ body {
 	.header-navigation .header-logo {
 		position: absolute;
 		top: 0;
-		left: -65px;
+		left: -15px;
 		display: block;
 		background: url('/images/logo.png') no-repeat;
-		width: 173px;
-		height: 58px;
+		width: 130px;
+		height: 40px;
 	}
 	
 	.header .navigation {
