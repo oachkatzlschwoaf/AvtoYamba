@@ -5,7 +5,7 @@
 		</strong>
 		{% if show_all %}
 		<span class="stream-item-car-number">
-		пишет о {% render 'AYGeneralBundle:Default:showCarNumber' with { 'format' : 25, 'number' : message.getNumber } %}
+		пишет о {% render 'AYGeneralBundle:Default:showCarNumber' with { 'format' : 18, 'number' : message.getNumber } %}
 		</span>
 		{% endif %}
 		<small class="date stream-item-time">
@@ -21,7 +21,7 @@
 	<div class="stream-item-media">
        	<ul class="media-grid">
             <li>
-                 <a target="_blank" data-controls-dynamic-modal="pic-preview-modal" data-content="{{ message.getImage() }}:large" data-backdrop="true" href="{{ message.getImage() }}:large">
+                 <a target="_blank" class="" data-media-preview="true" href="{{ message.getImage() }}:large">
                      <img src="{{ message.getImage() }}:small" />
                  </a>
              </li>

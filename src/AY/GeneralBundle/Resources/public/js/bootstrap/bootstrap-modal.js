@@ -91,6 +91,8 @@
 
           that.$element.addClass('in')
 
+		  that.$element.trigger('pre-show')	
+
           transition ?
             that.$element.one(transitionEnd, function () { that.$element.trigger('shown') }) :
             that.$element.trigger('shown')

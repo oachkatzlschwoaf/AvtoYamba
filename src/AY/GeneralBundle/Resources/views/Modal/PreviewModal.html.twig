@@ -1,26 +1,14 @@
-<div id="pic-preview-modal" class="modal hide fade">
-    <div class="modal-header">
-		Заголовок окна
-    </div>
+<div id="pic-preview-modal" class="modal hide fade media-preview-modal">
     <div class="modal-body">
 		контент окна
     </div>
-    <div class="modal-footer">
-		футер окна
-    </div>
-
-    <script type="text/javascript"> 
-		$('body').delegate('[data-controls-dynamic-modal]', 'click', function (e) {
-	      e.preventDefault()
-	      var $this = $(this).data('show', true)
-		  if(!$this.data().content){
-			return false;
-		  }
-		  
-		  $('#' + $this.attr('data-controls-dynamic-modal') + ' .modal-body').html([
-			'<img src="' + $this.data().content + '" alt="" />'
-			].join(''));	
-	      $('#' + $this.attr('data-controls-dynamic-modal')).modal( $this.data() )
-	    });
-    </script> 
 </div>
+<script type="text/javascript"> 
+$('[data-media-preview]').fancybox({
+	centerOnScroll: true,
+	showCloseButton: true
+});
+$('body').delegate('#fancybox-img', 'click', function(e){
+	this.src && (window.open(this.src));
+});
+</script> 

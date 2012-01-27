@@ -6,6 +6,33 @@ body {
     padding-top: 20px; /* to make the container go all the way to the bottom of the topbar */
 }
 
+.header {
+}
+	.header-navigation {
+		position: relative;
+	}
+	
+	.header-navigation .header-logo {
+		position: absolute;
+		top: 0;
+		left: -15px;
+		display: block;
+		background: url('/images/logo.png') no-repeat;
+		width: 130px;
+		height: 40px;
+	}
+	
+	.header .navigation {
+		float: right;
+	}
+	
+
+	.header-navigation .header-actions {
+		padding-top: 5px;
+		float: right;
+		text-align: right;
+	}
+
 .container {
 
 }
@@ -47,7 +74,7 @@ body {
     box-shadow: 0 1px 2px rgba(0,0,0,.15);
 }
 
-.top-fill {
+.header {
     background-color: #999;
     background-color: #999999;
     background-repeat: repeat-x;
@@ -117,6 +144,7 @@ body {
     margin: 2px 0 0 13px;
     overflow: hidden;
     float: left;
+    border: 1px solid red;
 }
 
 .car-number-50 .car-number-num {
@@ -130,6 +158,35 @@ body {
 }
 
 .car-number-50 .car-number-reg {
+    float: left;
+    position: relative;
+    top: 2px;
+}
+
+.car-number-18 {
+    padding-left: 7px;
+	width: 83px;
+	height: 18px;
+	background: url('http://avtoyamba.com/images/83x18_sprite.png') 0 -45px;
+}
+
+.car-number-18 .car-number-region {
+    margin-left: 3px;
+    overflow: hidden;
+    float: left;
+}
+
+.car-number-18 .car-number-num {
+    float: left;
+    position: relative;
+    top: 3px;
+}
+
+.car-number-18 .car-number-chr {
+    top: 5px;
+}
+
+.car-number-18 .car-number-reg {
     float: left;
     position: relative;
     top: 2px;
@@ -211,6 +268,32 @@ body {
 	
 }
 
+.car-number-details {
+	
+}
+	.car-number-details .car-number {
+
+	}
+	
+	.car-number-details .car-number-stream-info {
+		float: right;
+		
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	
+	.car-number-details .car-number-stream-info .car-number-stream-info-item {
+		margin: 0;
+		padding: 0;
+		display: block;
+		text-align: right;
+	}
+	
+	.car-number-details .car-number-stream-info .car-number-stream-info-item .subscribe-button {
+		margin-top: 10px;
+	}
+
 .stream-item-container h2 {
 	padding: 0 20px;
 }
@@ -222,6 +305,11 @@ body {
 	clear: both;
 	overflow: hidden;
 }
+
+	.stream-item:hover {
+		
+	}
+
 	.stream-item-header {
 		clear: both;
 /*		margin-bottom: 10px;*/
@@ -246,7 +334,7 @@ body {
 		
 		.stream-item-header .car-number {
 			position: relative;
-			margin-bottom: -8px;
+			margin-bottom: -5px;
 		}
 		
 	.stream-item-text {
@@ -268,3 +356,8 @@ body {
 		border: 0;
 	}
 	
+.media-preview-modal {
+}
+.media-preview-modal .modal-body {
+	display: inline-block;
+}
