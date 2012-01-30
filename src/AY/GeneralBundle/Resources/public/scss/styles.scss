@@ -1,3 +1,5 @@
+@import "compass/css3";
+
 html {
   background-color: #eee; }
 
@@ -254,3 +256,66 @@ body {
 
 .media-preview-modal .modal-body {
   display: inline-block; }
+
+.car-number-check-self {
+	position: relative;
+	
+	a, a:hover {
+		position: absolute;
+		left: 235px;
+		top: 2px;
+		line-height: 43px;
+		font-size: 14px;
+		display: inline-block;
+		cursor: pointer;
+	}
+	
+}
+
+
+.car-number-template {
+	position: relative;
+
+	input, input:focus {
+		@include box-shadow(none);
+		@include border-radius(0);	
+		@include transition(none);			
+		border: 0;
+		background: transparent;
+		color: black;
+	}
+	
+	input {
+		position: absolute;
+		padding: 0;
+		margin: 0;
+	  	
+		text-transform: uppercase;
+
+		left: 0;
+		top: 0;
+	}
+	
+	input.predefined-text {
+		color: #999;
+	}
+	
+	#car-number-code-control {
+		top: 3px;
+		left: 20px;
+		height: 45px;
+		width: 135px;
+		font-size: 36px;
+		line-height: 38px;		
+	}
+	
+	#car-number-region-control {
+		top: 4px;
+		left: 172px;
+		height: 32px;
+		width: 37px;
+		font-size: 20px;
+		text-align: center;
+	}	
+}
+

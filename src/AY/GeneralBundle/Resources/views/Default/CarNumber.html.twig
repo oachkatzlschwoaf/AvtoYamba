@@ -1,0 +1,110 @@
+<div class="car-number-check-self">
+	<span class="car-number car-number-template car-number-big car-number-50">
+		<form action="" id="car-number-control-form">
+			<input type="text" maxlength="6" id="car-number-code-control" class="predefined-text" value="а999аа" data-predefined-text="а999аа" />
+			<input type="text" maxlength="3" id="car-number-region-control" class="predefined-text" value="199" data-predefined-text="199">		
+		</form>
+	</span>
+	<a href="#find" disabled="disabled" data-placement="right" rel="popover" data-trigger="manual">Найти!</a>
+</div>
+
+<script type="text/javascript">
+	(function(){
+		var CONST = {
+			predefinedTextAttr: 'data-predefined-text'
+		};
+		
+		var number = {
+			predefine: function(e){
+				var $et = $(e.target);
+				switch(e.type){
+					case "focus":
+						if( $et.val() == $et.attr(CONST.predefinedTextAttr) ){
+							$et.val('');
+							$et.removeClass('predefined-text');							
+						}
+						break;
+						
+					case "blur":
+						if( $et.val().length == 0 ){
+							$et.val( $et.attr(CONST.predefinedTextAttr) );
+							$et.addClass('predefined-text');
+						}						
+						break;
+				}
+			},
+			
+			code: function(s){
+				var sl = s.length,
+					_rl = [(sl - 1 >= 3 ? 3 : sl - 1), (sl - 4 >= 2 ? 2 : sl - 4)],
+					_rc = 'АВЕКМНОРСТУХ',
+					_rr = ['^[' + _rc + ']','\\d{' + _rl[0] + '}','[' + _rc + ']{' + _rl[1] + '}'],
+					_r = '';
+
+				switch(true){
+					case (sl == 1):
+						_r = _rr[0];
+						break;
+
+					case (sl < 4 && sl > 1):
+						_r = _rr[0] + _rr[1];
+						break;
+
+					case (sl < 7 && sl > 3):
+						_r = _rr.join('');
+						break;
+				}
+
+				return new RegExp( _r ).test( s ) || false;
+			},
+			
+			region: function(s){
+				var _r = '\\d';
+				
+				if( s.length > 1 )
+					_r += '{' + s.length + '}';
+					
+				return new RegExp( _r ).test( s ) || false;
+			}
+		};
+		
+		$('body').delegate('.car-number-check-self a', 'click', function(e){
+			e.stopPropagation();
+			if(!$(this).attr('disabled')){
+				$('#car-number-control-form').submit();	
+			} else {
+			}
+				
+			return false;
+		});
+		
+		$('#car-number-code-control').focus(number.predefine).blur(number.predefine);
+		$('#car-number-region-control').focus(number.predefine).blur(number.predefine);		
+		
+		$('body').delegate('#car-number-code-control', 'focus', function(){
+			
+		});
+		
+		$('body').delegate('#car-number-code-control', 'keyup', function(e){
+			if(!number.code(this.value.toUpperCase())){
+				this.value = this.value.substr(0, this.value.length - 1);
+			}
+			
+			if( this.value.length == 6 ){
+				$('#car-number-region-control').focus();
+			}
+		});
+		
+		$('body').delegate('#car-number-region-control', 'keyup', function(e){
+			if(!number.region(this.value.toUpperCase())){
+				this.value = this.value.substr(0, this.value.length - 1);
+			}
+			
+			if( this.value.length > 2 ){
+				$('#car-number-region-control').removeAttr('disabled');
+			}
+		});
+		
+	})()
+	
+</script>
