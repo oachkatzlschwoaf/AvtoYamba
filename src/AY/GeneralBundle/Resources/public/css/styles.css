@@ -192,6 +192,14 @@ body {
     top: 2px;
 }
 
+.car-number-template {}
+.car-number-template input[type=text], .car-number-template input[type=text]:focus {
+	border: 0;
+	padding: 0;
+	margin: 0;
+
+}
+
 .b-car-number {
 	background: url("/images/225x50_sprite.png") no-repeat left bottom;
 	width: 225px;

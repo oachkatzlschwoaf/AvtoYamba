@@ -26,6 +26,9 @@
             <div class="span5">
             </div>
 </div> -->
+			<div class="content-block separated-block">
+				{% include 'AYGeneralBundle:Default:CarNumber.html.twig' %}
+			</div>
 			<div class="content-block content-block-no-padding separated-block">	
 				{% include 'AYGeneralBundle:Stream:StreamItemsList.html.twig' with { 'messages' : messages, 'heading' : 'Последние записи:', 'show_all' : true } %}
 			</div>
