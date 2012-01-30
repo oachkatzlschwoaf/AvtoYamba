@@ -4,8 +4,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
 
-		{% stylesheets
-			'@AYGeneralBundle/Resources/public/css/*' 
+		{% stylesheets filter="compass"
+			'@AYGeneralBundle/Resources/public/scss/*' 
 		%}
         <link rel="stylesheet" href="{{asset_url}}">
 		{% endstylesheets %}

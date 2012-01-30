@@ -10,18 +10,18 @@ body {
 }
 	.header-navigation {
 		position: relative;
-	}
 	
-	.header-navigation .header-logo {
-		position: absolute;
-		top: 0;
-		left: -15px;
-		display: block;
-		background: url('/images/logo.png') no-repeat;
-		width: 130px;
-		height: 40px;
-	}
 	
+		.header-logo {
+			position: absolute;
+			top: 0;
+			left: -15px;
+			display: block;
+			background: url('/images/logo.png') no-repeat;
+			width: 130px;
+			height: 40px;
+		}
+	}
 	.header .navigation {
 		float: right;
 	}
@@ -64,7 +64,7 @@ body {
 .content {
     background-color: #fff;
 
-/*    margin: 40px -20px; /* negative indent the amount of the padding to maintain the grid system */*/
+/*    margin: 40px -20px; /* negative indent the amount of the padding to maintain the grid system */
 	margin: 20px;
     -webkit-border-radius: 0 0 6px 6px;
     -moz-border-radius: 0 0 6px 6px;
