@@ -1,0 +1,256 @@
+html {
+  background-color: #eee; }
+
+body {
+  background-color: #eee;
+  padding-top: 20px;
+  /* to make the container go all the way to the bottom of the topbar */ }
+
+.header {}
+
+.header-navigation {
+  position: relative;
+  .header-logo {
+    position: absolute;
+    top: 0;
+    left: -15px;
+    display: block;
+    background: url('/images/logo.png') no-repeat;
+    width: 130px;
+    height: 40px; } }
+
+.header .navigation {
+  float: right; }
+
+.header-navigation .header-actions {
+  padding-top: 5px;
+  float: right;
+  text-align: right; }
+
+.container {}
+
+/* Page header tweaks */
+
+.page-header {
+  background-color: #f5f5f5;
+  padding: 20px 20px 10px;
+  margin: -20px -20px 20px; }
+
+.content-block {
+  background-color: #fff;
+  padding: 20px; }
+
+.content-block-no-padding {
+  padding: 20px 0; }
+
+.separated-block {
+  border-bottom: 1px solid #EEE;
+  margin: 10px inherit; }
+
+.content {
+  background-color: #fff;
+  /*    margin: 40px -20px; /* negative indent the amount of the padding to maintain the grid system */
+  margin: 20px;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
+
+.header {
+  background-color: #999;
+  background-color: #999999;
+  background-repeat: repeat-x;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #555555), color-stop(100%, #333333));
+  background-color: #333;
+  background-color: #333333;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#555555), to(#333333));
+  background-image: -moz-linear-gradient(top, #555555, #333333);
+  background-image: -ms-linear-gradient(top, #555555, #333333);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #555555), color-stop(100%, #333333));
+  background-image: -webkit-linear-gradient(top, #555555, #333333);
+  background-image: -o-linear-gradient(top, #555555, #333333);
+  background-image: linear-gradient(top, #555555, #333333);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#555555', endColorstr='#222222', GradientType=0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1); }
+
+.car-number, .car-number-region, .car-number-num, .car-number-reg, .car-number-chr {
+  display: inline-block; }
+
+.car-number {}
+
+.car-number-25 {
+  padding-left: 8px;
+  width: 108px;
+  height: 25px;
+  background: url('http://avtoyamba.com/images/115x25_sprite.png') 0 25px;
+  .car-number-region {
+    margin-left: 8px;
+    overflow: hidden;
+    float: left; }
+  .car-number-num {
+    float: left;
+    position: relative;
+    top: 3px; }
+  .car-number-chr {
+    top: 8px; }
+  .car-number-reg {
+    float: left;
+    position: relative;
+    top: 2px; } }
+
+.car-number-50 {
+  padding-left: 17px;
+  width: 208px;
+  height: 50px;
+  background: url('http://avtoyamba.com/images/225x50_sprite.png') 0 50px;
+  .car-number-region {
+    margin: 2px 0 0 13px;
+    overflow: hidden;
+    float: left;
+    border: 1px solid red; }
+  .car-number-num {
+    float: left;
+    position: relative;
+    top: 3px; }
+  .car-number-chr {
+    top: 8px; }
+  .car-number-reg {
+    float: left;
+    position: relative;
+    top: 2px; } }
+
+.car-number-18 {
+  padding-left: 7px;
+  width: 83px;
+  height: 18px;
+  background: url('http://avtoyamba.com/images/83x18_sprite.png') 0 -45px;
+  .car-number-region {
+    margin-left: 3px;
+    overflow: hidden;
+    float: left; }
+  .car-number-num {
+    float: left;
+    position: relative;
+    top: 3px; }
+  .car-number-chr {
+    top: 5px; }
+  .car-number-reg {
+    float: left;
+    position: relative;
+    top: 2px; } }
+
+.b-car-number {
+  background: url("/images/225x50_sprite.png") no-repeat left bottom;
+  width: 225px;
+  height: 50px;
+  position: relative;
+  input[type=text] {
+    border: 0 !important;
+    border-radius: 0;
+    box-shadow: initial;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none;
+    &:focus {
+      border: 0 !important;
+      text-align: center; } }
+  font-family: "Conv_RoadNumbers", Sans-Serif;
+  color: black;
+  font-size: 38px;
+  * {
+    font-family: "Conv_RoadNumbers", Sans-Serif;
+    color: black;
+    font-size: 38px; }
+  .c-car-number {
+    padding: 12px 27px; }
+  .car-number {
+    width: 130px;
+    display: block;
+    input[type=text] {
+      letter-spacing: 5px; } }
+  .car-region {
+    position: absolute;
+    right: 13px;
+    top: 7px;
+    line-height: 19px;
+    width: 40px;
+    input[type=text] {
+      font-size: 0.7em;
+      letter-spacing: 1px; } } }
+
+.hr-norm {
+  margin: 20px 0 0 19px; }
+
+.message {
+  display: block;
+  overflow: hidden;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 0 10px 0;
+  &:hover {
+    background: #f0f0f0; }
+  .user-info {} }
+
+.car-number-details {
+  .car-number {}
+  .car-number-stream-info {
+    float: right;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    .car-number-stream-info-item {
+      margin: 0;
+      padding: 0;
+      display: block;
+      text-align: right;
+      .subscribe-button {
+        margin-top: 10px; } } } }
+
+.stream-item-container h2 {
+  padding: 0 20px; }
+
+.stream-item {
+  border-bottom: 1px solid #EEE;
+  padding: 5px 20px 5px;
+  margin: 0 0 5px 0;
+  clear: both;
+  overflow: hidden;
+  &:hover {} }
+
+.stream-item-header {
+  clear: both;
+  /*		margin-bottom: 10px;*/
+  position: relative;
+  line-height: 25px;
+  .stream-item-author {
+    font-size: 15px; }
+  .stream-item-time {
+    /*			position: absolute;
+    			right: 0;
+    			top: 3px;
+    */
+    float: right;
+    color: #999;
+    font-size: 12px;
+    line-height: 25px; }
+  .car-number {
+    position: relative;
+    margin-bottom: -5px; } }
+
+.stream-item-text {
+  font-size: 15px;
+  margin: 7px 0px 11px 0px; }
+
+.stream-item-media {
+  /*		float: right;*/
+  /*		height: 70px;*/
+  text-align: center;
+  .media-grid {
+    display: inline-block; } }
+
+.stream-item-empty {
+  border: 0; }
+
+.media-preview-modal .modal-body {
+  display: inline-block; }
