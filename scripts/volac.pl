@@ -85,13 +85,27 @@ sub gd_run {
 
         # Get last mentions
         my $st = Time::HiRes::time();
+        
+        my $tweets;
+        my $ok;
 
-        my $tweets = $self->{'tc'}->mentions({
-            since_id         => $last_id,
-            count            => 200,
-            include_rts      => 0,
-            include_entities => 1,
-        });
+        while (!$ok) {
+            eval {
+                $tweets = $self->{'tc'}->mentions({
+                    since_id         => $last_id,
+                    count            => 200,
+                    include_rts      => 0,
+                    include_entities => 1,
+                });
+            };
+
+            if ($@) {
+                ERROR "API ERROR: Get mentions: $@";        
+                sleep(10);
+            } else {
+                $ok = 1;
+            }
+        }
 
         if (scalar(@$tweets) > 0) {
             my $duration = sprintf("%.2f", Time::HiRes::time() - $st);
