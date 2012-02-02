@@ -348,8 +348,6 @@
 	(function(){
 		var number = new NumberControl($('#car-number-main-input'));
 		
-		window.number = number;
-		
 		$('body').delegate('.car-number-check-self a', 'click', function(e){
 			e.stopPropagation();
 			if(!$(this).attr('disabled')){
