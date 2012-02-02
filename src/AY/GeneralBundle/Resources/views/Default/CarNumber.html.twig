@@ -160,10 +160,20 @@
 					hide: function(){
 						$(this.code._caret._c).hide();
 						clearInterval(this.code._caret._t);
+						this.code._caret._t = null;
 					},
 					
 					show: function(){
 						$(this.code._caret._c).show();
+						
+						if(!this.code._caret._t){
+							var that = this;
+							this.code._caret._t = setInterval(
+								function(){
+									$(that.code._caret._c).toggle();
+								}
+							, 400)
+						}
 					}
 				},
 								
@@ -275,10 +285,20 @@
 					hide: function(){
 						$(this.region._caret._c).hide();
 						clearInterval(this.region._caret._t);
+						this.region._caret._t = null;
 					},
 					
 					show: function(){
 						$(this.region._caret._c).show();
+						
+						if(!this.region._caret._t){
+							var that = this;
+							this.region._caret._t = setInterval(
+								function(){
+									$(that.region._caret._c).toggle();
+								}
+							, 400)
+						}
 					}
 				},
 				
