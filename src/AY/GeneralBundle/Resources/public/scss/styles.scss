@@ -100,25 +100,156 @@ body {
     top: 2px; } }
 
 .car-number-50 {
-  padding-left: 17px;
-  width: 208px;
-  height: 50px;
-  background: url('http://avtoyamba.com/images/225x50_sprite.png') 0 50px;
-  .car-number-region {
-    margin: 2px 0 0 13px;
-    overflow: hidden;
-    float: left;
-    border: 1px solid red; }
-  .car-number-num {
-    float: left;
-    position: relative;
-    top: 3px; }
-  .car-number-chr {
-    top: 8px; }
-  .car-number-reg {
-    float: left;
-    position: relative;
-    top: 2px; } }
+	padding-left: 17px;
+	width: 208px;
+	height: 50px;
+	background: url('http://avtoyamba.com/images/225x50_sprite.png') 0 50px;
+	
+	.car-number-region {
+		margin: 2px 0 0 13px;
+		overflow: hidden;
+		float: left;
+		border: 1px solid red;
+	}
+	.car-number-num {
+		float: left;
+		position: relative;
+		top: 3px;
+		
+		display: none;
+		height: 36px;
+		width: 23px;
+		
+		background: url('/images/225x50_sprite.png') no-repeat;
+	}
+	.car-number-chr {
+		top: 8px; 
+		height: 34px;
+	}
+	.car-number-reg {
+		float: left;
+		position: relative;
+		top: 2px; 
+		
+		display: none;
+		height: 36px;
+		width: 23px;
+		
+		background: url('/images/225x50_sprite.png') no-repeat;
+		
+	}
+	
+	.car-number-control-code-stylize {
+		
+		position: absolute;
+		
+		.car-number-text-A{
+		 	background-position: 0 -70px; 
+		} 
+		.car-number-text-B{
+		 	background-position: -25px -70px; 
+		} 
+		.car-number-text-E{
+		 	background-position: -50px -70px; 
+		} 
+		.car-number-text-K{
+		 	background-position: -75px -70px; 
+		} 
+		.car-number-text-M{
+		 	background-position: -100px -70px; 
+		} 
+		.car-number-text-H{
+		 	background-position: -125px -70px; 
+		} 
+		.car-number-text-O{
+		 	background-position: -150px -70px; 
+		} 
+		.car-number-text-P{
+		 	background-position: -175px -70px; 
+		} 
+		.car-number-text-C{
+		 	background-position: -200px -70px; 
+		} 
+		.car-number-text-T{
+		 	background-position: -225px -70px; 
+		} 
+		.car-number-text-Y{
+		 	background-position: 0 -105px; 
+		} 
+		.car-number-text-X{
+		 	background-position: -25px -105px; 
+		} 
+		.car-number-text-0{
+		 	background-position: -225px 0; 
+		} 
+		.car-number-text-1{
+		 	background-position: 0 0; 
+		} 
+		.car-number-text-2{
+		 	background-position: -25px 0; 
+		} 
+		.car-number-text-3{
+		 	background-position: -50px 0; 
+		} 
+		.car-number-text-4{
+		 	background-position: -75px 0; 
+		} 
+		.car-number-text-5{
+		 	background-position: -100px 0; 
+		} 
+		.car-number-text-6{
+		 	background-position: -125px 0; 
+		} 
+		.car-number-text-7{
+		 	background-position: -150px 0; 
+		} 
+		.car-number-text-8{
+		 	background-position: -175px 0; 
+		} 
+		.car-number-text-9{
+		 	background-position: -200px 0; 
+		} 
+	}
+	
+	.car-number-control-region-stylize {
+		
+		.car-number-reg {
+			height: 30px;
+			width: 14px;
+		}
+
+		.car-number-text-0{
+		 	background-position: -230px -41px; 
+		} 
+		.car-number-text-1{
+		 	background-position: -5px -41px; 
+		} 
+		.car-number-text-2{
+		 	background-position: -30px -41px; 
+		} 
+		.car-number-text-3{
+		 	background-position: -55px -41px; 
+		} 
+		.car-number-text-4{
+		 	background-position: -80px -41px; 
+		} 
+		.car-number-text-5{
+		 	background-position: -105px -41px; 
+		} 
+		.car-number-text-6{
+		 	background-position: -130px -41px; 
+		} 
+		.car-number-text-7{
+		 	background-position: -155px -41px; 
+		} 
+		.car-number-text-8{
+		 	background-position: -180px -41px; 
+		} 
+		.car-number-text-9{
+		 	background-position: -205px -41px; 
+		} 
+	}
+}
 
 .car-number-18 {
   padding-left: 7px;
@@ -282,7 +413,7 @@ body {
 		@include transition(none);			
 		border: 0;
 		background: transparent;
-		color: black;
+		color: transparent;
 	}
 	
 	input {
@@ -294,28 +425,61 @@ body {
 
 		left: 0;
 		top: 0;
+		
+		z-index: 2;
+		
+		color: transparent;
+		color: white;
+		
+		width: 1px;
+		height: 1px;
+		
+		font-size: 0;
 	}
 	
 	input.predefined-text {
 		color: #999;
+		color: transparent;
 	}
 	
-	#car-number-code-control {
+	.car-number-control-code {
 		top: 3px;
-		left: 20px;
+		left: 18px;
 		height: 45px;
-		width: 135px;
+		width: 140px;
 		font-size: 36px;
 		line-height: 38px;		
+		position: absolute;
+		z-index: 1;	
+		margin: 0;
+		padding: 0;	
 	}
 	
-	#car-number-region-control {
+	.car-number-control-region {
 		top: 4px;
-		left: 172px;
+		left: 168px;
 		height: 32px;
-		width: 37px;
+		width: 45px;
 		font-size: 20px;
 		text-align: center;
+		position: absolute;
+		z-index: 1;				
+		margin: 0;
+		padding: 0;			
 	}	
+	
+	.predefined-text .car-number-num, .predefined-text .car-number-reg {
+		opacity: .3;
+	}
+	
+	.caret {
+		display: block;
+		width: 1px;
+		height: 80%;
+		background: black;
+		position: absolute;
+		top: 10%;
+		
+	}
 }
 

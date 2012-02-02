@@ -1,8 +1,22 @@
-<div class="car-number-check-self">
-	<span class="car-number car-number-template car-number-big car-number-50">
-		<form action="" id="car-number-control-form">
-			<input type="text" maxlength="6" id="car-number-code-control" class="predefined-text" value="а999аа" data-predefined-text="а999аа" />
-			<input type="text" maxlength="3" id="car-number-region-control" class="predefined-text" value="199" data-predefined-text="199">		
+<div class="car-number-check-self" id="car-number-main-input">
+	<span class="car-number car-number-template car-number-big car-number-50 car-number-control">
+		<form action="/search_number" id="car-number-control-form">
+			<label class="car-number-control-code car-number-control-code-stylize">
+				<input type="text" maxlength="6" data-type="code" class="predefined-text" value="х000хх" data-predefined-text="х000хх" />
+				{% for i in range(0,5) %}
+					<span class="car-number-num {% if (loop.index < 2 or loop.index > 4) %}car-number-chr{% endif %}"></span>
+				{% endfor %}
+				<span class="caret"></span>
+					
+			</label>
+			<label class="car-number-control-region car-number-control-region-stylize">
+				<input type="text" maxlength="3" data-type="region" class="predefined-text" value="001" data-predefined-text="001">		
+				{% for i in range(0,3) %}
+		            <span class="car-number-reg"></span>
+		        {% endfor  %}
+				<span class="caret"></span>
+			</label>
+			<input type="hidden" />
 		</form>
 	</span>
 	<a href="#find" disabled="disabled" data-placement="right" rel="popover" data-trigger="manual">Найти!</a>
@@ -10,63 +24,311 @@
 
 <script type="text/javascript">
 	(function(){
-		var CONST = {
-			predefinedTextAttr: 'data-predefined-text'
+		var n = function(params){
+			var that = this;
+			
+			params = params || {};
+			
+			//stub
+			params.predefined = params.predefined || {};
+			params.control = params;
+			
+			this.P = {};
+			
+			this.P.control = typeof params.control == 'object' ? params.control : $( params.control );
+			this.P.control.code = this.P.control.find('.' +  n.C.control.code.cls + ' input')[0];
+			this.P.control.region = this.P.control.find('.' + n.C.control.region.cls + ' input')[0];			
+			
+			if(!this.code._stylize.items){
+				this.code._stylize.items =  $(this.P.control).find('.' + n.C.control.code.cls + '-stylize .car-number-num');
+			}
+			
+			if(!this.region._stylize.items){
+				this.region._stylize.items =  $(this.P.control).find('.' + n.C.control.region.cls + '-stylize .car-number-reg');
+			}
+			
+			this.code._caret._c = $(this.P.control.code).parent().find('.caret')[0];
+			this.region._caret._c = $(this.P.control.region).parent().find('.caret')[0];			
+			
+			if(params.predefined){
+				this.code.stylize.call( this );
+				this.region.stylize.call( this );
+		
+				function togglePredefinedCallback(e){
+					that.predefine.call(that, e);
+				}
+				
+				togglePredefinedCallback(this.P.control.code);
+				togglePredefinedCallback(this.P.control.region);				
+		
+				$( this.P.control.code ).focus( togglePredefinedCallback ).blur( togglePredefinedCallback );
+				$( this.P.control.region ).focus( togglePredefinedCallback ).blur( togglePredefinedCallback );		
+			}
+			
+			$(this.P.control.code).on('keyup', function(e){
+				that.code.handle.input.call(that, e);
+			});
+
+			$(this.P.control.region).on('keyup', function(e){
+				that.region.handle.input.call(that, e);
+			});
 		};
 		
-		var number = {
-			predefine: function(e){
+		n.C = {
+			predefinedText: {
+				attr: 'data-predefined-text',
+				cls: 'predefined-text'
+			},
+			
+			control: {
+				code: {
+					cls: 'car-number-control-code'
+				},
+				region: {
+					cls: 'car-number-control-region'
+				}
+				
+			},
+			
+			number: {
+				trans: {
+					ru: {
+						'А': 'A',
+						'В': 'B',
+						'Е': 'E',
+						'К': 'K',
+						'М': 'M',
+						'Н': 'H',
+						'О': 'O',
+						'Р': 'P',
+						'С': 'C',
+						'Т': 'T',
+						'У': 'Y',
+						'Х': 'X'
+					}
+				}
+			}
+		};
+		
+		n.prototype = {
+			predefine: function( e ){
+				if(!e.target){
+					e.target = e;
+					e.init = true;
+				}
 				var $et = $(e.target);
 				switch(e.type){
 					case "focus":
-						if( $et.val() == $et.attr(CONST.predefinedTextAttr) ){
+						if( $et.val() == $et.attr(n.C.predefinedText.attr) || $et.val() == ''){
 							$et.val('');
-							$et.removeClass('predefined-text');							
+							$et.removeClass(n.C.predefinedText.cls);							
+							$et.parent().removeClass(n.C.predefinedText.cls);
+							this[$et.attr('data-type')].clear.call( this, true );
+							this[$et.attr('data-type')]._caret.move.call( this, 0 );														
 						}
+						this[$et.attr('data-type')]._caret.show.call( this );						
 						break;
 						
-					case "blur":
-						if( $et.val().length == 0 ){
-							$et.val( $et.attr(CONST.predefinedTextAttr) );
-							$et.addClass('predefined-text');
+					default:
+						if( $et.val().length == 0 || e.init){
+							$et.val( $et.attr(n.C.predefinedText.attr) );
+							$et.addClass(n.C.predefinedText.cls);
+							$et.parent().addClass(n.C.predefinedText.cls);
+							this[$et.attr('data-type')].stylize.call(this, ($et.val()));
 						}						
-						break;
+						this[$et.attr('data-type')]._caret.hide.call( this );
 				}
 			},
 			
-			code: function(s){
-				var sl = s.length,
-					_rl = [(sl - 1 >= 3 ? 3 : sl - 1), (sl - 4 >= 2 ? 2 : sl - 4)],
-					_rc = 'АВЕКМНОРСТУХ',
-					_rr = ['^[' + _rc + ']','\\d{' + _rl[0] + '}','[' + _rc + ']{' + _rl[1] + '}'],
-					_r = '';
-
-				switch(true){
-					case (sl == 1):
-						_r = _rr[0];
-						break;
-
-					case (sl < 4 && sl > 1):
-						_r = _rr[0] + _rr[1];
-						break;
-
-					case (sl < 7 && sl > 3):
-						_r = _rr.join('');
-						break;
-				}
-
-				return new RegExp( _r ).test( s ) || false;
-			},
-			
-			region: function(s){
-				var _r = '\\d';
+			code: {
+				_stylize: {
+					items: null
+				},
 				
-				if( s.length > 1 )
-					_r += '{' + s.length + '}';
+				_caret: {
+					_c: null,
+					_t: null,
 					
-				return new RegExp( _r ).test( s ) || false;
+					move: function( p, i ){
+						i = i || {};
+						i = i.offsetWidth || 0;
+						$(this.code._caret._c).css({
+							left: i * p + 5
+						});
+					},
+					
+					hide: function(){
+						$(this.code._caret._c).hide();
+						clearInterval(this.code._caret._t);
+					},
+					
+					show: function(){
+						$(this.code._caret._c).show();
+					}
+				},
+								
+				stylize: function( s ){
+					s = s || this.P.control.code.value;
+					s = s.toUpperCase();
+					
+					var cls, i;
+					
+					for(i in s){
+						cls = 'car-number-text-' + (n.C.number.trans.ru[s[i]] || s[i]);
+						$(this.code._stylize.items[i]).addClass(cls).show();
+						this.code._stylize.items[i].cls = cls;
+					}
+					
+					this.code.clear.call( this );
+					
+					return true;
+				},
+				
+				clear: function( clear ){
+					for(i = 5; i >= this.P.control.code.value.length; i--){
+						$(this.code._stylize.items[i]).hide();
+						if(this.code._stylize.items[i].cls){
+							$(this.code._stylize.items[i]).removeClass(this.code._stylize.items[i].cls);
+						}
+					}
+					
+					clear && (this.P.control.code.value = '');
+				},
+				
+				check: function( s ){
+					var sl = s.length,
+						_rl = [(sl - 1 >= 3 ? 3 : sl - 1), (sl - 4 >= 2 ? 2 : sl - 4)],
+						_rc = 'АВЕКМНОРСТУХ',
+						_rr = ['^[' + _rc + ']','\\d{' + _rl[0] + '}','[' + _rc + ']{' + _rl[1] + '}'],
+						_r = '';
+
+					switch(true){
+						case (sl == 1):
+							_r = _rr[0];
+							break;
+
+						case (sl < 4 && sl > 1):
+							_r = _rr[0] + _rr[1];
+							break;
+
+						case (sl < 7 && sl > 3):
+							_r = _rr.join('');
+							break;
+					}
+
+					return new RegExp( _r ).test( s ) || false;
+				},
+				
+				handle: {
+					input: function( e ){
+						var t = e.target,
+							s = t.value.toUpperCase();
+
+						if( !this.code.check( s ) ){
+							t.value = s = s.substr( 0, s.length - 1 );
+						}
+
+						this.code.stylize.call( this, s );
+						this.code._caret.move.call( this , s.length, this.code._stylize.items[s.length - 1] );
+
+						if( s.length == 6 ){
+							$( this.P.control.region ).focus();
+						}
+					}
+				}
+			},
+			
+			region: {
+				_stylize: {
+					items: null
+				},
+				
+				stylize: function( s ){
+					s = s || this.P.control.region.value;
+					s = s.toUpperCase();
+
+					var cls, i;
+					
+					for(i in s){
+						cls = 'car-number-text-' + s[i];
+						$(this.region._stylize.items[i]).addClass(cls).show();
+						this.region._stylize.items[i].cls = cls;
+					}
+					
+					this.region.clear.call( this );
+					return true;
+				},
+				
+				_caret: {
+					_c: null,
+					_t: null,
+					
+					move: function( p, i ){
+						i = i || {};
+						i = i.offsetWidth || 0;
+						$(this.region._caret._c).css({
+							left: i * p + 2
+						});
+						
+					},
+					
+					hide: function(){
+						$(this.region._caret._c).hide();
+						clearInterval(this.region._caret._t);
+					},
+					
+					show: function(){
+						$(this.region._caret._c).show();
+					}
+				},
+				
+				clear: function( clear ){
+					for(i = 3; i >= this.P.control.region.value.length; i--){
+						$(this.region._stylize.items[i]).hide();
+						if(this.region._stylize.items[i].cls){
+							$(this.region._stylize.items[i]).removeClass(this.region._stylize.items[i].cls);
+						}
+					}
+					
+					clear && (this.P.control.region.value = '');
+				},
+				
+				check: function( s ){
+					var _r = '\\d';
+
+					if( s.length > 1 )
+						_r += '{' + s.length + '}';
+
+					return new RegExp( _r ).test( s ) || false;
+				},
+				handle: {
+					input: function( e ){
+						var t = e.target,
+							s = t.value.toUpperCase();
+
+						if( !this.region.check( s ) ){
+							t.value = s = s.substr(0, s.length - 1);
+						}
+
+						this.region.stylize.call( this, s );				
+
+						this.region._caret.move.call( this , s.length, this.region._stylize.items[s.length - 1] );	
+
+						this.P.control.trigger('filled');
+					}
+				}
 			}
-		};
+		}
+		
+		window.NumberControl = n;
+	})();
+	
+	
+	
+	(function(){
+		var number = new NumberControl($('#car-number-main-input'));
+		
+		window.number = number;
 		
 		$('body').delegate('.car-number-check-self a', 'click', function(e){
 			e.stopPropagation();
@@ -78,32 +340,8 @@
 			return false;
 		});
 		
-		$('#car-number-code-control').focus(number.predefine).blur(number.predefine);
-		$('#car-number-region-control').focus(number.predefine).blur(number.predefine);		
 		
-		$('body').delegate('#car-number-code-control', 'focus', function(){
-			
-		});
 		
-		$('body').delegate('#car-number-code-control', 'keyup', function(e){
-			if(!number.code(this.value.toUpperCase())){
-				this.value = this.value.substr(0, this.value.length - 1);
-			}
-			
-			if( this.value.length == 6 ){
-				$('#car-number-region-control').focus();
-			}
-		});
-		
-		$('body').delegate('#car-number-region-control', 'keyup', function(e){
-			if(!number.region(this.value.toUpperCase())){
-				this.value = this.value.substr(0, this.value.length - 1);
-			}
-			
-			if( this.value.length > 2 ){
-				$('#car-number-region-control').removeAttr('disabled');
-			}
-		});
 		
 	})()
 	
