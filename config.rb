@@ -3,7 +3,7 @@
 # Set this to the root of your project when deployed:
 http_path = "/"
 css_dir = "src/AY/GeneralBundle/Resources/public/css"
-sass_dir = "src/AY/GeneralBundle/Resources/public/sass"
+sass_dir = "src/AY/GeneralBundle/Resources/public/scss"
 images_dir = "web/images"
 javascripts_dir = "src/AY/GeneralBundle/Resources/public/js"
 
