@@ -10,6 +10,25 @@ body {
 
 .header {}
 
+.top-buttons {
+    li {
+        margin-top: 3px;
+        height: 32px; 
+        width: 32px; 
+
+        .write {
+            background: url('/images/note_up.png') no-repeat;
+            height: 32px; 
+            width: 32px; 
+        }
+
+        .write:hover {
+            background: url('/images/note_over.png') no-repeat;
+        }
+    }
+}
+
+
 .header-navigation {
   position: relative;
   .header-logo {
