@@ -10,6 +10,48 @@ body {
 
 .header {}
 
+.small-text {
+    color: #999;
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.write-message-form {
+    textarea {
+        width: 420px;
+        height: 69px;
+        color: black;
+        font-size: 16px;
+    }
+
+    label {
+        line-height: 25px;
+        font-weight: normal;
+        font-size: 14px;
+    }
+
+    input {
+        width: 210px;
+        color: black;
+        font-size: 16px;
+    }
+
+    .upload {
+        input {
+            font-size: 12px;
+        }
+    }
+
+    .oneline label {
+        display: inline;
+        float: left;
+    }
+
+    .oneline input {
+        margin-left: 10px;
+    }
+}
+
 .top-buttons {
     li {
         margin-top: 3px;

@@ -26,44 +26,46 @@
     </head>
     <body>
 
-        <div id="write-modal" class="modal hide fade">
+        <div id="write-modal" class="modal hide fade" style="width: 472px; margin: -250px 0 0 -237px">
             <div class="modal-header">
                 <a href="#" class="close">&times;</a>
                 <h3>Написать сообщение</h3>
             </div>
-            <div class="modal-body">
-                <form action="{{ path('homepage') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="form-stacked">
-                    
-                    <fieldset>
-                        <div class="clearfix">
-                            {{ form_label(form.user_name, 'Ваш ник:') }}
-                            <div class="input">
-                                {{ form_widget(form.user_name) }}
-                            </div>
-                        </div>
-                        <div class="clearfix">
-                            {{ form_label(form.text, 'Номер:') }}
+            <div class="modal-body" style="padding-bottom: 0px; padding-top: 4px;">
+                <form action="{{ path('homepage') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="form-stacked write-message-form" style="padding-left: 7px">
+                    <fieldset style="padding: 7px 0 0 0;">
+                        <div class="clearfix oneline">
+                            {{ form_label(form.text, 'Номер автомобиля') }}
                             <div class="input">
                                 {{ form_widget(form.number) }}
                             </div>
+                            <p class="help-block" style="margin: 3px 0 0 0;">
+                                укажите номер автомобиля о котором пишете в сообщении
+                            </p>
                         </div>
-                        <div class="clearfix">
-                            {{ form_label(form.text, 'Фоточка:') }}
-                            <div class="input">
+                        <div class="clearfix oneline">
+                            {{ form_label(form.text, 'Фото автомобиля') }}
+                            <div class="input upload">
                                 {{ form_widget(form.image_upload) }}
                             </div>
                         </div>
                         <div class="clearfix">
-                            {{ form_label(form.text, 'Текст:') }}
+                            {{ form_label(form.text, 'Сообщение для водителя') }}
                             <div class="input">
                                 {{ form_widget(form.text) }}
+                            </div>
+                        </div>
+                        <div class="clearfix oneline" style="padding: 5px 0 0 0">
+                            {{ form_label(form.user_name, 'Ваш никнейм') }}
+                            <div class="input">
+                                {{ form_widget(form.user_name) }}
                             </div>
                         </div>
                     </fieldset>
                     {{ form_rest(form) }}
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn primary" value="Написать!" />
+                <input type="submit" class="btn primary" value="Написать" />
             </div>
             </form>
         </div>

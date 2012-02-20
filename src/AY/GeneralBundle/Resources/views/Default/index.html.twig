@@ -3,37 +3,25 @@
 {% block body %}
 
 <div class="container span8"> 
-    <!-- <div class="span7 content">
-        <div class="row">
-            <div class="span7">
-                <h2>Что это такое?</h2>
-                <p style="height: 100px">
-                    АвтоЩито? АвтоЯмба! Это сервис с помощью которого можно БЕЗ регистрации анонимно отправлять сообщения на номера автомобилей!
-                    <br /><br />
-                    Вы можете читать, что вам пишут другие автомобилисты по СМС или по емейлу. Пыщ пыщ!
-                    <br /><br />
-                </p>
-				<h2>
-					Узнай, что о тебе думают другие!
-				</h2>
-				<p>
-				
-												
-				</p>	
-                <a class="btn success" data-controls-modal="write-modal" data-backdrop="true">Написать сообщение!</a>
-                <a class="btn primary" id="search-number">Найти сообщения по номеру</a>
-            </div>
-            <div class="span5">
-            </div>
-</div> -->
-			<div class="content-block separated-block">
-				{% include 'AYGeneralBundle:Default:CarNumber.html.twig' %}
-			</div>
+    <div class="content-block separated-block">
+        <h2>Узнай, что о тебе думают:</h2>
+
+        <div style="margin-top: 10px; margin-bottom: 5px;">
+            {% include 'AYGeneralBundle:Default:CarNumber.html.twig' %}
+        </div>
+        <p>
+            <small class="small-text">
+                В Автоямбе у каждого автомобиля есть своя страничка, на которой можно писать сообщения для этого водителя.
+                <br />
+                Введи свой номер и узнай, что пишут о твоем авто другие водители.
+            </small>
+        </p>
+    </div>
 
 
-			<div class="content-block content-block-no-padding separated-block">	
-				{% include 'AYGeneralBundle:Stream:StreamItemsList.html.twig' with { 'messages' : messages, 'heading' : 'Последние записи:', 'show_all' : true } %}
-			</div>
+    <div class="content-block content-block-no-padding separated-block">	
+        {% include 'AYGeneralBundle:Stream:StreamItemsList.html.twig' with { 'messages' : messages, 'heading' : 'Последние записи:', 'show_all' : true } %}
+    </div>
 </div>
 
 </div> <!-- /container -->
