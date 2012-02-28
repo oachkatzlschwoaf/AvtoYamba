@@ -469,83 +469,37 @@ body {
 	
 }
 
-
-.car-number-template {
-	position: relative;
-
-	input, input:focus {
-		@include box-shadow(none);
-		@include border-radius(0);	
-		@include transition(none);			
-		border: 0;
-		background: transparent;
-		color: transparent;
+.car-number-control {
+	.car-number-control-code input, .car-number-control-region input {
+		width: 100%;
+		color: black;
 	}
-	
-	input {
-		position: absolute;
-		padding: 0;
-		margin: 0;
-	  	
-		text-transform: uppercase;
-
-		left: 0;
-		top: 0;
-		
-		z-index: 2;
-		
-		color: transparent;
-		color: white;
-		
-		width: 1px;
-		height: 1px;
-		
-		font-size: 0;
-	}
-	
-	input.predefined-text {
-		color: #999;
-		color: transparent;
-	}
-	
 	.car-number-control-code {
-		top: 3px;
-		left: 18px;
-		height: 45px;
-		width: 140px;
-		font-size: 36px;
-		line-height: 38px;		
-		position: absolute;
-		z-index: 1;	
-		margin: 0;
-		padding: 0;	
+		width: 200px;
+		float: left;
+		margin: 0 15px 0 0;
+				
+		input {
+
+		}
 	}
-	
 	.car-number-control-region {
-		top: 4px;
-		left: 168px;
-		height: 32px;
-		width: 45px;
-		font-size: 20px;
-		text-align: center;
-		position: absolute;
-		z-index: 1;				
-		margin: 0;
-		padding: 0;			
-	}	
-	
-	.predefined-text .car-number-num, .predefined-text .car-number-reg {
-		opacity: .3;
-	}
-	
-	.caret {
-		display: block;
-		width: 1px;
-		height: 80%;
-		background: black;
-		position: absolute;
-		top: 10%;
+		width: 100px;
+		float: left;
 		
+		input {
+
+		}
 	}
 }
 
+input.predefined-text {
+	color: #ccc !important;
+}
+
+.car-number-check-self {
+	
+	.car-number-control {
+		margin-right: 15px;
+	}
+}
