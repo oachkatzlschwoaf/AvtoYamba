@@ -2,23 +2,94 @@
 	<div class="car-number car-number-template car-number-big car-number-control" style="margin-left: 75px; margin-right: 0px;">
 		<form action="/search_number" id="car-number-control-form">
 			<label class="car-number-control-code" style="width: 120px; margin: 0px;">
-				<input type="text" maxlength="6" data-type="code" class="predefined-text-control predefined-text car-number-style-ru" value="A001AA" data-predefined-text="х000хх" style="width: 100px; text-align: center; " />
+				<input type="text" maxlength="6" data-type="code" class="predefined-text-control predefined-text car-number-style-ru" data-predefined-text="A001AA" style="width: 100px; text-align: center;" />
 				<small style="position: relative; left: 1px;">
 					номер
 				</small>
 			</label>
 			<label class="car-number-control-region" style="width: 80px; margin: 0px;">
-				<input type="text" maxlength="3" data-type="region" class="predefined-text-control predefined-text car-number-style-ru" value="190" data-predefined-text="001" style="width: 60px; text-align: center">	
+				<input type="text" maxlength="3" data-type="region" class="predefined-text-control predefined-text car-number-style-ru" data-predefined-text="190" style="width: 60px; text-align: center" />	
 				<small style="position: relative; left: 1px;">
 					регион
 				</small>
 			</label>
+			<input type="submit" href="#" class="btn success submit" style="position: relative; top: 6px; left: 15px; float: left" value="Найти!" />
 		</form>
 	</div>
-
-	<div href="#" class="btn success" style='position: relative; top: -21px; left: 1px;'>Найти!</div>
 </div>
 
 <script type="text/javascript" charset="utf-8">
 	$.predefine('.predefined-text-control');
+	
+	(function(){
+		var c = function(container){
+			var cc = null,
+				that = this;
+			
+			this.container = cc = $(container);
+			
+			this.input = {
+				code: cc.find('[data-type="code"]'),
+				region: cc.find('[data-type="region"]')
+			}
+			
+			function handleInput(e){
+				that.validate.call(that, e);
+			}
+			
+			$(this.input.code).keyup(handleInput);
+			$(this.input.code).keyup(handleInput);			
+		}
+		
+		c.prototype = {
+			validator: {
+				code: function( str, char ){
+					var sl = s.length,
+						_rc = 'АВЕКМНОРСТУХ',
+						_r = '',
+						char = char || null;
+						
+					function validateChar(c){
+						if(sl > 1 && sl < 4){
+							_r = '\d';
+						}
+						
+						if(sl > 4 || sl == 1){
+							_r = '[' + _rc + ']';
+						}
+						
+						return new RegExp( _r ).test( с ) || false;;
+					}
+					
+					if(char){
+						return validateChar(char);
+					}
+					
+				},
+				
+				region: function( s ){
+					var _r = '\\d';
+
+					if( s.length > 1 )
+						_r += '{' + s.length + '}';
+
+					return new RegExp( _r ).test( s ) || false;
+				}
+			},
+			
+			validate: function( e ){
+				var t = $(e.target),
+					type = t.attr('data-type');
+				
+				var valid = this.validator.[type](t.val(), String.fromCharCode(e.keyCode));
+				if(!valid){
+					return false;
+				}
+			}
+		};
+		
+		window.CarNumber = c;
+	})();
+	
+	var carNumber = new CarNumber($('#car-number-main-input'))
 </script>
