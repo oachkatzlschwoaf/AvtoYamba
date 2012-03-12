@@ -11,7 +11,7 @@ number:
     defaults: { _controller: AYGeneralBundle:Default:number }
 
 search_number:
-    pattern:  /look/{number}
+    pattern:  /look
     defaults: { _controller: AYGeneralBundle:Default:searchNumber }
 
 unsubscribe:
