@@ -198,31 +198,34 @@
 	        {% endif %}
 			</div>
             <div class="separated-block content-block">
-				<div class="row car-number-details">
-					<div class="span4">
-						{% render 'AYGeneralBundle:Default:showCarNumber' with { 'format' : 50, 'number' : number } %}
-					</div>
-					<ul class="span3 car-number-stream-info">
-						<li class="car-number-stream-info-item">
-							{{ messages|length }} 
-							{% transchoice messages|length %}
-							    {1} упоминание | [2,4] упоминания | [5,Inf] упоминаний
-							{% endtranschoice %}
-						</li>
-						<li class="car-number-stream-info-item">
-							{% set messagesWithPic = 0 %}
-							{% for message in messages %}
-								{% if message.getImageThumb() %}
-									{% set messagesWithPic = messagesWithPic + 1 %}
-								{% endif %}
-							{% endfor %}
-							{{ messagesWithPic }} фото
-						</li>
-						<li class="car-number-stream-info-item">
-			                <a class="btn primary subscribe-button" data-controls-modal="subscribe-modal" data-backdrop="true">Подписка</a>
-						</li>
-					</ul>
-				</div>
+                {% if number %}
+                    <div class="row car-number-details">
+                        <div class="span4">
+                        </div>
+                        <ul class="span3 car-number-stream-info">
+                            {% if messages %}
+                                <li class="car-number-stream-info-item">
+                                    {{ messages|length }} 
+                                    {% transchoice messages|length %}
+                                        {1} упоминание | [2,4] упоминания | [5,Inf] упоминаний
+                                    {% endtranschoice %}
+                                </li>
+                                <li class="car-number-stream-info-item">
+                                    {% set messagesWithPic = 0 %}
+                                    {% for message in messages %}
+                                        {% if message.getImageThumb() %}
+                                            {% set messagesWithPic = messagesWithPic + 1 %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {{ messagesWithPic }} фото
+                                </li>
+                                <li class="car-number-stream-info-item">
+                                    <a class="btn primary subscribe-button" data-controls-modal="subscribe-modal" data-backdrop="true">Подписка</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endif %}
             </div>
 
 		<div class="content-block content-block-no-padding">
