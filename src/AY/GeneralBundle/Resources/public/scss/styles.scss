@@ -470,6 +470,8 @@ body {
 }
 
 .car-number-control {
+	display: block;
+	
 	.car-number-control-code, .car-number-control-region {
 		text-align: center;
 	}
@@ -512,5 +514,12 @@ input.predefined-text {
 	
 	.car-number-control {
 		margin-right: 15px;
+	}
+}
+
+#car-number-main-input {
+
+	.car-number-control {
+		margin: 0 0 0 75px;
 	}
 }

@@ -7,8 +7,14 @@
         <h2>Узнай, что о тебе думают:</h2>
 
         <div style="margin-top: 10px; margin-bottom: 5px;">
-            {% include 'AYGeneralBundle:Control:CarNumber.html.twig' %}
+			<div class="car-number-check-self" id="car-number-main-input">
+            	{% include 'AYGeneralBundle:Control:CarNumber.html.twig' with { 'submit' : true}%}
+			</div>	
+			<script type="text/javascript" charset="utf-8">
+				var carNumber = new CarNumber($('#car-number-main-input'));
+			</script>
         </div>
+		
         <p>
             <small class="small-text">
                 В Автоямбе у каждого автомобиля есть своя страничка, на которой можно писать сообщения для этого водителя.

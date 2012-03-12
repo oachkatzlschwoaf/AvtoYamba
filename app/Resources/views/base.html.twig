@@ -36,9 +36,14 @@
                     <fieldset style="padding: 7px 0 0 0;">
                         <div class="clearfix oneline">
                             {{ form_label(form.text, 'Номер автомобиля') }}
-                            <div class="input">
-                                {{ form_widget(form.number) }}
-                            </div>
+                            
+							<div class="car-number-check-self" id="car-number-modal-input">
+				            	{% include 'AYGeneralBundle:Control:CarNumber.html.twig' %}
+							</div>	
+							<script type="text/javascript" charset="utf-8">
+								var carNumber = new CarNumber($('#car-number-modal-input'));
+							</script>
+
                             <p class="help-block" style="margin: 3px 0 0 0;">
                                 укажите номер автомобиля о котором пишете в сообщении
                             </p>
