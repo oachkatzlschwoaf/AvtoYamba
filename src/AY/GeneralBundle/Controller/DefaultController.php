@@ -205,7 +205,9 @@ class DefaultController extends Controller {
 
     }
 
-    public function searchNumberAction($number) {
+    public function searchNumberAction(Request $req) {
+        $number = $req->get('number');
+
         # Clear nubmer
         $number = str_replace(" ", "", $number);
 
