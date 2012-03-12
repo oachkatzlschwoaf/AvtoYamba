@@ -6,12 +6,14 @@
     <div class="content-block separated-block">
         <h2>Узнай, что о тебе думают:</h2>
 
-        <div style="margin-top: 10px; margin-bottom: 5px;">
+        <div style="margin-top: 10px; margin-bottom: 5px; float: left; clear: both; width: 100%">
 			<div class="car-number-check-self" id="car-number-main-input">
             	{% include 'AYGeneralBundle:Control:CarNumber.html.twig' with { 'submit' : true}%}
 			</div>	
 			<script type="text/javascript" charset="utf-8">
-				var carNumber = new CarNumber($('#car-number-main-input'));
+				var carNumber = new CarNumber($('#car-number-main-input'), {
+					submitable: false
+				});
 			</script>
         </div>
 		

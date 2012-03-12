@@ -49,28 +49,66 @@ function undef(o){
 $.predefine('.predefined-text-control');
 
 (function(){
-	var c = function(container){
+	var c = function(container, params){
 		var cc = null,
-			that = this;
+			that = this,
+			params = params || {};
+		
+		this.params = params;
 		
 		this.container = cc = $(container);
 		
 		this.input = {
 			code: cc.find('[data-type="code"]'),
 			region: cc.find('[data-type="region"]')
-		}
+		};
+		
+		var submit = cc.find('[type="submit"]');
 		
 		function handleInput(e){
 			that.validate.call(that, e);
 		}
 		
+		function handleSubmit(e){
+			e.stopPropagation();
+			that.submit.call(that, e);
+			
+			if(!params.submitable){
+				return false;
+			}
+		}
+		
+		
 		$(this.input.code).keyup(handleInput);
-		$(this.input.code).keyup(handleInput);			
+		$(this.input.code).keyup(handleInput);
+		
+		if(submit){
+			$(submit).click(handleSubmit);
+		}			
 	}
 	
 	c.prototype = {
+		submit: function(e){
+			e.stopPropagation();
+			
+			var url = this.container.find('form').attr('action') + '/$number';
+			
+			var number = this.input.code.val() + this.input.region.val();
+			
+			url = url.replace('$number', number);
+			
+			$.ajax({
+				url: url,
+				type: "post"
+			});
+			
+			return false;
+		},
+		
 		validator: {
 			code: function( str, char ){
+				return false;
+				
 				var sl = str.length,
 					_rc = 'АВЕКМНОРСТУХ',
 					_r = '',
@@ -95,6 +133,8 @@ $.predefine('.predefined-text-control');
 			},
 			
 			region: function( s ){
+				return false;
+				
 				var _r = '\\d';
 
 				if( s.length > 1 )
@@ -105,6 +145,8 @@ $.predefine('.predefined-text-control');
 		},
 		
 		validate: function( e ){
+			return false;
+			
 			var t = $(e.target),
 				type = t.attr('data-type');
 			
