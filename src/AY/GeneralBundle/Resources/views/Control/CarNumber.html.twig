@@ -5,20 +5,20 @@
 
 <div class="clearfix car-number car-number-template car-number-big car-number-control">
 	<form action="{{ path('search_number') }}" id="car-number-control-form">
-		<label class="car-number-control-code" style="width: 120px; margin: 0px;">
-			<input type="text" maxlength="6" data-type="code" class="predefined-text-control predefined-text car-number-style-ru" data-predefined-text="A001AA" style="width: 100px; text-align: center;" />
+		<label class="control-group car-number-control-code">
+			<input name="code" type="text" maxlength="6" data-type="code" class="predefined-text-control predefined-text car-number-style-ru" data-predefined-text="A001AA" />
 			<small style="position: relative; left: 1px;">
 				номер
 			</small>
 		</label>
-		<label class="car-number-control-region" style="width: 80px; margin: 0px;">
-			<input type="text" maxlength="3" data-type="region" class="predefined-text-control predefined-text car-number-style-ru" data-predefined-text="190" style="width: 60px; text-align: center" />	
+		<label class="control-group car-number-control-region">
+			<input name="region" type="text" maxlength="3" data-type="region" class="predefined-text-control predefined-text car-number-style-ru" data-predefined-text="190" />	
 			<small style="position: relative; left: 1px;">
 				регион
 			</small>
 		</label>
 		{% if submit %}
-		<input type="submit" href="#" class="btn success submit" style="position: relative; top: 6px; left: 15px; float: left" value="Найти!" />
+		<input type="submit" href="#" class="btn success car-number-control-submit" value="Найти!" />
 		{% endif %}
 	</form>
 </div>

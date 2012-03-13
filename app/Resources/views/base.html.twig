@@ -78,8 +78,10 @@
 		<div class="header topbar">
 			{% include 'AYGeneralBundle:Layout:HeaderNavigation.html.twig' %}
 		</div>
+		
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        
+		{% block javascripts %}{% endblock %}
 
         <script>
             $(function () {

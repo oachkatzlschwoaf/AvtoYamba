@@ -18,10 +18,10 @@
 	</p>
 
 	{% if message.getImageThumb() %}
-	<div class="stream-item-media">
-       	<ul class="media-grid">
-            <li>
-                 <a target="_blank" class="" data-media-preview="true" href="{{ message.getImage() }}:large">
+	<div class="span4 stream-item-media">
+       	<ul class="thumbnails">
+            <li class="span4">
+                 <a target="_blank" class="thumbnail" data-media-preview="true" href="{{ message.getImage() }}:large">
                      <img src="{{ message.getImage() }}:small" />
                  </a>
              </li>

@@ -5,7 +5,7 @@ html {
 
 body {
   background-color: #eee;
-  padding-top: 20px;
+
   /* to make the container go all the way to the bottom of the topbar */ }
 
 .header {}
@@ -53,11 +53,20 @@ body {
 }
 
 .top-buttons {
+		ul, li {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
     li {
         margin-top: 3px;
         margin-left: 7px;
         height: 32px; 
         width: 32px; 
+				
+				a {
+					display: block;
+				}
 
         .write {
             background: url('/images/top_icons.png') no-repeat -48px 0px;
@@ -79,9 +88,6 @@ body {
 .header-navigation {
   position: relative;
   .header-logo {
-    position: absolute;
-    top: 0;
-    left: -9px;
     display: block;
     background: url('/images/logo.png') no-repeat;
     width: 130px;
@@ -113,7 +119,7 @@ body {
 
 .separated-block {
   border-bottom: 1px solid #EEE;
-  margin: 10px inherit; }
+  margin: 10px initial; }
 
 .content {
   background-color: #fff;
@@ -444,7 +450,10 @@ body {
 .stream-item-media {
   /*		float: right;*/
   /*		height: 70px;*/
-  text-align: center;
+
+  float: none;
+	margin: 0 auto;
+
   .media-grid {
     display: inline-block; } }
 
@@ -484,25 +493,31 @@ body {
 	}
 	
 	.car-number-control-code input, .car-number-control-region input {
-		width: 100%;
+		width: 90%;
+		margin-bottom: 0;
+		text-align: center;
 		color: black;
 	}
 	.car-number-control-code {
-		width: 200px;
+		width: 120px;
 		float: left;
-		margin: 0 15px 0 0;
+		margin: 0 5px 0 0;
 				
 		input {
 
 		}
 	}
 	.car-number-control-region {
-		width: 100px;
+		width: 80px;
 		float: left;
 		
 		input {
 
 		}
+	}
+	
+	.car-number-control-submit {
+		margin-left: 15px;
 	}
 }
 

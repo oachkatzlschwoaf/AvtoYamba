@@ -2,37 +2,38 @@
 
 {% block body %}
 
-<div class="container span8"> 
-    <div class="content-block separated-block">
-        <h2>Узнай, что о тебе думают:</h2>
+<div class="container"> 
+	<div class="offset2">
+		<div class="span6">
+		    <div class="content-block separated-block">
+		        <h2>Узнай, что о тебе думают:</h2>
 
-        <div style="margin-top: 10px; margin-bottom: 5px; float: left; clear: both; width: 100%">
-			<div class="car-number-check-self" id="car-number-main-input">
-            	{% include 'AYGeneralBundle:Control:CarNumber.html.twig' with { 'submit' : true}%}
-			</div>	
-			<script type="text/javascript" charset="utf-8">
-				var carNumber = new CarNumber($('#car-number-main-input'), {
-					submitable: true
-				});
-			</script>
-        </div>
+		        <div style="margin-top: 10px; margin-bottom: 5px; float: left; clear: both; width: 100%">
+					<div class="car-number-check-self" id="car-number-main-input">
+		            	{% include 'AYGeneralBundle:Control:CarNumber.html.twig' with { 'submit' : true}%}
+					</div>	
+					<script type="text/javascript" charset="utf-8">
+						var carNumber = new CarNumber($('#car-number-main-input'), {
+							submitable: true
+						});
+					</script>
+		        </div>
 		
-        <p>
-            <small class="small-text">
-                В Автоямбе у каждого автомобиля есть своя страничка, на которой можно писать сообщения для этого водителя.
-                <br />
-                Введи свой номер и узнай, что пишут о твоем авто другие водители.
-            </small>
-        </p>
-    </div>
+		        <p>
+		            <small class="small-text">
+		                В Автоямбе у каждого автомобиля есть своя страничка, на которой можно писать сообщения для этого водителя.
+		                <br />
+		                Введи свой номер и узнай, что пишут о твоем авто другие водители.
+		            </small>
+		        </p>
+		    </div>
 
-
-    <div class="content-block content-block-no-padding separated-block">	
-        {% include 'AYGeneralBundle:Stream:StreamItemsList.html.twig' with { 'messages' : messages, 'heading' : 'Последние записи:', 'show_all' : true } %}
-    </div>
+		    <div class="content-block content-block-no-padding separated-block">	
+		        {% include 'AYGeneralBundle:Stream:StreamItemsList.html.twig' with { 'messages' : messages, 'heading' : 'Последние записи:', 'show_all' : true } %}
+		    </div>
+		</div>
+	</div>
 </div>
-
-</div> <!-- /container -->
 
 <script>
     $('#go-number').twipsy({'placement' : 'below', 'offset' : 12 })

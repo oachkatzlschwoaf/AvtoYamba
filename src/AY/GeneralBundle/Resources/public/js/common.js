@@ -73,14 +73,12 @@ $.predefine('.predefined-text-control');
 			e.stopPropagation();
 			that.submit.call(that, e);
 			
-			if(!params.submitable){
-				return false;
-			}
+			return false;
 		}
 		
 		
-		$(this.input.code).keyup(handleInput);
-		$(this.input.code).keyup(handleInput);
+		// $(this.input.code).keyup(handleInput);
+		// $(this.input.code).keyup(handleInput);
 		
 		if(submit){
 			$(submit).click(handleSubmit);
@@ -91,50 +89,46 @@ $.predefine('.predefined-text-control');
 		submit: function(e){
 			e.stopPropagation();
 			
-			var url = this.container.find('form').attr('action') + '/$number';
+			if(!this.validate()){
+				return false;
+			}
+			
+			var url = this.container.find('form').attr('action');
 			
 			var number = this.input.code.val() + this.input.region.val();
 			
 			url = url.replace('$number', number);
 			
+			var success = function(){};
+			if(this.params.submitable){
+				success = function(){
+					document.location = url + '?number=' + number;
+				}
+			}
+			
 			$.ajax({
 				url: url,
-				type: "post"
+				type: "get",
+				data: {
+					number: number	
+				},
+				
+				success: success
 			});
 			
 			return false;
 		},
 		
 		validator: {
-			code: function( str, char ){
-				return false;
+			code: function( str ){
+				str = (str).toString();
+				var _rc = 'АВЕКМНОРСТУХ',
+					_r = '[' + _rc + ']\\d{3}[' + _rc + ']{2}';
 				
-				var sl = str.length,
-					_rc = 'АВЕКМНОРСТУХ',
-					_r = '',
-					char = char || null;
-					
-				function validateChar(c){
-					if(sl > 1 && sl < 4){
-						_r = '\d';
-					}
-					
-					if(sl > 4 || sl == 1){
-						_r = '[' + _rc + ']';
-					}
-					
-					return new RegExp( _r ).test( с ) || false;;
-				}
-				
-				if(char){
-					return validateChar(char);
-				}
-				
+				return new RegExp( _r ).test( str.toUpperCase() ) || false;
 			},
 			
 			region: function( s ){
-				return false;
-				
 				var _r = '\\d';
 
 				if( s.length > 1 )
@@ -144,16 +138,25 @@ $.predefine('.predefined-text-control');
 			}
 		},
 		
-		validate: function( e ){
-			return false;
+		validate: function(){
+			var valid = true;
 			
-			var t = $(e.target),
-				type = t.attr('data-type');
-			
-			var valid = this.validator[type](t.val(), String.fromCharCode(e.keyCode));
-			if(!valid){
-				return false;
+			if(!this.validator.code(this.input.code.val())){
+				this.input.code.parent().addClass('error');
+				valid = false;
+			} else {
+				this.input.code.parent().removeClass('error');
 			}
+
+			if(!this.validator.region(this.input.region.val())){
+				this.input.region.parent().addClass('error');
+				valid = false;
+			} else {
+				this.input.region.parent().removeClass('error');
+			}
+			
+			
+			return valid;
 		}
 	};
 	
