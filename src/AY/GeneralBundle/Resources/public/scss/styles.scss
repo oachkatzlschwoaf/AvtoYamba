@@ -16,6 +16,14 @@ body {
     line-height: 12px;
 }
 
+.error-helper {
+	display: none;
+}
+
+.error .error-helper {
+	display: inline;
+}
+
 .write-message-form {
     textarea {
         width: 420px;
@@ -101,7 +109,12 @@ body {
   float: right;
   text-align: right; }
 
-.container {}
+.container {
+	width: 460px;
+}
+.content-container {
+	
+}
 
 /* Page header tweaks */
 
@@ -493,18 +506,18 @@ body {
 	}
 	
 	.car-number-control-code input, .car-number-control-region input {
-		width: 90%;
-		margin-bottom: 0;
+		margin: 0;
 		text-align: center;
 		color: black;
 	}
 	.car-number-control-code {
 		width: 120px;
 		float: left;
-		margin: 0 5px 0 0;
+		margin: 0 5px 0 10px;
+		
 				
 		input {
-
+			width: 110px;
 		}
 	}
 	.car-number-control-region {
@@ -512,7 +525,7 @@ body {
 		float: left;
 		
 		input {
-
+			width: 70px;	
 		}
 	}
 	
@@ -535,6 +548,6 @@ input.predefined-text {
 #car-number-main-input {
 
 	.car-number-control {
-		margin: 0 0 0 75px;
+		margin: 0 0 0 65px;
 	}
 }

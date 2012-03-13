@@ -8,9 +8,9 @@
     </div>
 {% endif %}
 
-<div class="container"> 
-	<div class="offset2">
-		<div class="span6">
+<div class="container content-container"> 
+
+
 			<div class="content-block">
 		        <div id="ss-success" class="alert-message success hide">
 		            <a class="close" href="#">&times;</a>
@@ -75,8 +75,8 @@
 			<div class="content-block content-block-no-padding">
 				{% include 'AYGeneralBundle:Stream:StreamItemsList.html.twig' with { 'messages' : messages, 'heading' : 'Последние записи:' } %}
 	        </div>
-		</div>
-	</div>	
+
+
 </div>
 
 {% include 'AYGeneralBundle:Modal:SubscribeModal.html.twig' %}

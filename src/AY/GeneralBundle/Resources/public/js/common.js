@@ -10,33 +10,60 @@ function undef(o){
 			throw new Error('No selector for PredefinedText control');
 		};
 		
-		$(document.body).on('focus', selector, function(e){
-			var el = $(e.target);
-			if(!el.predefinedText){
-				el.predefinedText = el.attr('data-predefined-text');
-			}
-			
-			var t = el.predefinedText;
-			if(el.val() === t){
-				el.val('');
-			}
-			el.removeClass('predefined-text');									
-		});
+		var PT = this;		
+		var elems = $(selector),
+				t = null;
 		
-		$(document.body).on('blur', selector, function(e){
-			var el = $(e.target);
+		
+		this.show = function(el){
 			if(!el.predefinedText){
 				el.predefinedText = el.attr('data-predefined-text');
 			}
-			
-			var t = el.predefinedText;
+
+			t = el.predefinedText;
 
 			if(el.val().length == 0){
 				el.val(t);
 				el.addClass('predefined-text');
 			}
+			
+			t = null;
+		}
+		
+		this.hide = function(el){
+			if(!el.predefinedText){
+				el.predefinedText = el.attr('data-predefined-text');
+			}
+			
+			t = el.predefinedText;
+			
+			if(el.val() === t){
+				el.val('');
+			}
+			el.removeClass('predefined-text');
+			
+			t = null;
+		}
+		
+		elems.each(function(el){
+			el = $(elems[el]);
+			if(!el.predefinedText){
+				PT.show(el);
+			}
 		});
+		
+		
+		$(document.body).on('focus', selector, function(e){
+			PT.hide($(e.target));							
+		});
+		
+		$(document.body).on('blur', selector, function(e){
+			PT.show($(e.target))
+		});
+		
+		
 	}
+	
 	if(!undef($)){
 		$.predefine = PredefinedText;
 	} else {
@@ -45,8 +72,6 @@ function undef(o){
 	}
 	
 })();
-
-$.predefine('.predefined-text-control');
 
 (function(){
 	var c = function(container, params){
