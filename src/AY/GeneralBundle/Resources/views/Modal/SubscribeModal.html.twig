@@ -1,0 +1,157 @@
+<div id="unsubscribe-phone-modal" class="modal hide fade">
+    <div class="modal-header">
+        <a href="#" class="close">&times;</a>
+        <h3>Отписаться</h3>
+    </div>
+    <div class="modal-body">
+        <form action="{{ path('unsubscribe_phone', { 'number' : number } ) }}" id="unss-form" method="post" {{ form_enctype(form) }} novalidate class="form-stacked">
+            <div id="unss-alert" class="alert-message error hide" data-alert="alert" >
+                <p><b>Пичалька!</b> <span id="unss-error-text">Попробуйте еще раз :-(</span></p>
+            </div>
+            <p>
+                Чтобы отписаться от емейлов, вам необходимо кликнуть по ссылке в письме, которое вам приходит.
+            </p>
+            <p>
+                Для отписки от смс введите номер своего телефона и получите код для отписки:
+
+                <div>
+                    {{ form_widget(unss_form.phone) }}
+                    <input type="submit" class="btn primary" value="Получить код!" />
+                    <span class="help-block">Например +7 903 123 56 78</span>
+                </div>
+
+                <div id="unss-code" class='hide'>
+                    На этот телефон была отправлена смс с кодом, введите его здесь:
+                    {{ form_widget(unss_form.code) }}
+                    <input type="submit" class="btn primary" value="Отписаться" />
+                </div>
+                    
+            </p>
+        </form>
+    </div>
+    <div class="modal-footer">
+    </div>
+
+    <script type="text/javascript"> 
+        $(document).ready(function() { 
+            $('#unss-form').ajaxForm({ 
+                dataType: 'json',
+                beforeSubmit: beforeUnsubscribe,
+                success: processUnsubscribe
+            }); 
+
+            $("#unss-phone-success").alert();
+        }); 
+
+        function beforeUnsubscribe(data) {
+            $('#unss-alert').hide();
+        }
+
+        function processUnsubscribe(data) {
+            if (data.fail != 0) {
+                if (data.fail == "no_phone") {
+                    $('#unss-error-text').text('Подписки на этот телефон нет');
+                } else if (data.fail == "incorrect_code") {
+                    $('#unss-error-text').text('Код неправильный');
+                } else if (data.fail == "broken_sms") {
+                    $('#unss-error-text').text('Проблема отправки sms - попробуйте еще раз');
+                }
+
+                $("#unss-alert").show();
+            } else {
+                if (data.unsubscribe) {
+                    $("#unss-phone-success").show();
+                    $('#unsubscribe-phone-modal').modal('hide');
+                } else {
+                    $("#unss-code").show();
+                }
+            }
+        }
+
+        $('#unsubscribe-phone-modal').bind('hide', function () {
+            $('#unss-alert').hide();
+        })
+    </script> 
+</div>
+
+<div id="subscribe-modal" class="modal hide fade">
+    <div class="modal-header">
+        <a href="#" class="close">&times;</a>
+        <h3>Подписаться</h3>
+    </div>
+    <div class="modal-body">
+        <div id="ss-alert" class="alert-message error hide" data-alert="alert" >
+            <p><b>Пичалька!</b> <span id="ss-error-text">Форма заполнена некорректно :-(</span></p>
+        </div>
+        <p>
+            Смс бесплатные и вообще профит!
+        </p>
+        <form action="{{ path('number', { 'number' : number } ) }}" id="ss-form" method="post" {{ form_enctype(form) }} novalidate class="form-stacked">
+
+            <fieldset>
+                <div class="clearfix">
+                    {{ form_label(ss_form.email, 'E-Mail:') }}
+
+                    <div class="input">
+                        {{ form_widget(ss_form.email) }}
+                        <span class="help-block">Например example@mail.ru</span>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    {{ form_label(ss_form.phone, 'Телефон:') }}
+
+                    <div class="input">
+                        {{ form_widget(ss_form.phone) }}
+                        <span class="help-block">Например +7 903 123 56 78</span>
+                    </div>
+                </div>
+
+                {{ form_rest(ss_form) }}
+            </fieldset>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" class="btn primary" value="Подписаться!" />
+    </div>
+    </form>
+
+    <script type="text/javascript"> 
+        $(document).ready(function() { 
+            $('#ss-form').ajaxForm({ 
+                dataType: 'json',
+                beforeSubmit: beforeSubscribe,
+                success: processSubscribe
+            }); 
+
+            $("#ss-success").alert();
+        }); 
+
+        $('#subscribe-modal').bind('hide', function () {
+            $('#ss-alert').hide();
+        })
+
+        function beforeSubscribe() {
+            $('#ss-alert').hide();
+        }
+
+        function processSubscribe(data) {
+            if (data.fail != 0) {
+                if (data.fail == "too_much_email") {
+                    $('#ss-error-text').text('Подписка на этот email уже есть');
+                } else if (data.fail == "too_much_phone") {
+                    $('#ss-error-text').text('Подписка на этот телефон уже есть');
+                } else if (data.fail == "too_much_all") {
+                    $('#ss-error-text').text('Подписка уже есть');
+                } else if (data.fail == "wtf_error") {
+                    $('#ss-error-text').text('WTF? o_0');
+                }
+
+                $("#ss-alert").show();
+            } else {
+                $('#ss-alert').hide();
+                $('#subscribe-modal').modal('hide');
+                $("#ss-success").show();
+            }
+        }
+
+    </script> 
+</div>
