@@ -12,7 +12,8 @@ function undef(o){
 		
 		var PT = this;		
 		var elems = $(selector),
-				t = null;
+				t = null,
+				cls = CONST.CLS.PREDEFINED_TEXT;
 		
 		
 		this.show = function(el){
@@ -24,10 +25,8 @@ function undef(o){
 
 			if(el.val().length == 0){
 				el.val(t);
-				el.addClass('predefined-text');
+				el.addClass(cls);
 			}
-			
-			t = null;
 		}
 		
 		this.hide = function(el){
@@ -40,9 +39,7 @@ function undef(o){
 			if(el.val() === t){
 				el.val('');
 			}
-			el.removeClass('predefined-text');
-			
-			t = null;
+			el.removeClass(cls);
 		}
 		
 		elems.each(function(el){
@@ -164,16 +161,17 @@ function undef(o){
 		},
 		
 		validate: function(){
-			var valid = true;
+			var valid = true,
+					cls = CONST.CLS.PREDEFINED_TEXT;
 			
-			if(!this.validator.code(this.input.code.val())){
+			if(!this.validator.code(this.input.code.val()) || this.input.code.hasClass(cls)){
 				this.input.code.parent().addClass('error');
 				valid = false;
 			} else {
 				this.input.code.parent().removeClass('error');
 			}
 
-			if(!this.validator.region(this.input.region.val())){
+			if(!this.validator.region(this.input.region.val()) || this.input.region.hasClass(cls)){
 				this.input.region.parent().addClass('error');
 				valid = false;
 			} else {

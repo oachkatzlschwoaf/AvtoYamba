@@ -466,9 +466,14 @@ body {
 
   float: none;
 	margin: 0 auto;
+	
+	text-align: center;
 
-  .media-grid {
-    display: inline-block; } }
+  li {
+    display: inline-block; 
+		float: none;
+	} 
+}
 
 .stream-item-empty {
   border: 0; }
