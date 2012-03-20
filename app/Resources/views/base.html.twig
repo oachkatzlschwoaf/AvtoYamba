@@ -26,83 +26,35 @@
     </head>
     <body>
 
-        <div id="write-modal" class="modal hide fade" style="width: 472px; margin: -250px 0 0 -237px">
-            <div class="modal-header">
-                <a href="#" class="close">&times;</a>
-                <h3>Написать сообщение</h3>
-            </div>
-            <div class="modal-body" style="padding-bottom: 0px; padding-top: 4px;">
-                <form action="{{ path('homepage') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="form-stacked write-message-form" style="padding-left: 7px">
-                    <fieldset style="padding: 7px 0 0 0;">
-                        <div class="clearfix oneline">
-                            {{ form_label(form.text, 'Номер автомобиля') }}
-                            
-							<div class="car-number-check-self" id="car-number-modal-input">
-				            	{% include 'AYGeneralBundle:Control:CarNumber.html.twig' %}
-							</div>	
-							<script type="text/javascript" charset="utf-8">
-								var carNumber = new CarNumber($('#car-number-modal-input'));
-							</script>
-
-                            <p class="help-block" style="margin: 3px 0 0 0;">
-                                укажите номер автомобиля о котором пишете в сообщении
-                            </p>
-                        </div>
-                        <div class="clearfix oneline">
-                            {{ form_label(form.text, 'Фото автомобиля') }}
-                            <div class="input upload">
-                                {{ form_widget(form.image_upload) }}
-                            </div>
-                        </div>
-                        <div class="clearfix">
-                            {{ form_label(form.text, 'Сообщение для водителя') }}
-                            <div class="input">
-                                {{ form_widget(form.text) }}
-                            </div>
-                        </div>
-                        <div class="clearfix oneline" style="padding: 5px 0 0 0">
-                            {{ form_label(form.user_name, 'Ваш никнейм') }}
-                            <div class="input">
-                                {{ form_widget(form.user_name) }}
-                            </div>
-                        </div>
-                    </fieldset>
-                    {{ form_rest(form) }}
-            </div>
-            <div class="modal-footer">
-                <input type="submit" class="btn primary" value="Написать" />
-            </div>
-            </form>
-        </div>
-		
-		<div class="header topbar">
+        <div class="header topbar">
 			{% include 'AYGeneralBundle:Layout:HeaderNavigation.html.twig' %}
 		</div>
-		
-        {% block body %}{% endblock %}
-        
+
+		{% block body %}{% endblock %}
+
 		{% block javascripts %}{% endblock %}
 
-        <script>
-            $(function () {
-                $("a[rel=twipsy]").twipsy({
-                    live: true
-                })
-            })
+		<script>
+		    $(function () {
+		        $("a[rel=twipsy]").twipsy({
+		            live: true
+		        })
+		    })
 
-            $(function () {
-                $("a[rel=popover]")
-                    .popover({
-                        offset: 10
-                    })
-                    .click(function(e) {
-                        e.preventDefault()
-                    })
-            })
+		    $(function () {
+		        $("a[rel=popover]")
+		            .popover({
+		                offset: 10
+		            })
+		            .click(function(e) {
+		                e.preventDefault()
+		            })
+		    })
 
 			$.predefine('.predefined-text-control');
-        </script>
-
+		</script>
+		
+		{% include 'AYGeneralBundle:Modal:WriteModal.html.twig' %}
 		{% include 'AYGeneralBundle:Modal:PreviewModal.html.twig' %}
     </body>
 </html>

@@ -4,15 +4,17 @@
 
 
 <div class="clearfix car-number car-number-template car-number-big car-number-control">
-	<form action="{{ path('search_number') }}" id="car-number-control-form">
+	<form data-validation="full" action="{{ path('search_number') }}" id="car-number-control-form">
 		<label class="control-group car-number-control-code">
-			<input name="code" type="text" maxlength="6" data-type="code" class="predefined-text-control predefined-text car-number-style-ru" data-predefined-text="A001AA" />
+			<input name="carnumber" type="text" maxlength="6" data-type="code" class="carnumber required predefined-text-control predefined-text car-number-style-ru" data-predefined-text="A001AA" />
+			<span class="placeholder">А100АА</span>
 			<small class="help-inline">
 				номер
 			</small>
 		</label>
 		<label class="control-group car-number-control-region">
-			<input name="region" type="text" maxlength="3" data-type="region" class="predefined-text-control predefined-text car-number-style-ru" data-predefined-text="190" />	
+			<input name="carregion" type="text" maxlength="3" data-type="region" class="carregion required predefined-text-control predefined-text car-number-style-ru" data-predefined-text="190" />	
+			<span class="placeholder">190</span>
 			<small class="help-inline">
 				регион
 			</small>

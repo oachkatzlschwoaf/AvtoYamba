@@ -16,46 +16,30 @@ function undef(o){
 				cls = CONST.CLS.PREDEFINED_TEXT;
 		
 		
-		this.show = function(el){
-			if(!el.predefinedText){
-				el.predefinedText = el.attr('data-predefined-text');
-			}
-
-			t = el.predefinedText;
-
-			if(el.val().length == 0){
-				el.val(t);
-				el.addClass(cls);
+		
+		this.show = function(placeholder, input){
+			if(!$(placeholder).parent().hasClass("error") && input.val() === ""){
+				$(placeholder).show();
 			}
 		}
 		
-		this.hide = function(el){
-			if(!el.predefinedText){
-				el.predefinedText = el.attr('data-predefined-text');
-			}
-			
-			t = el.predefinedText;
-			
-			if(el.val() === t){
-				el.val('');
-			}
-			el.removeClass(cls);
+		this.hide = function(placeholder, input){
+			$(placeholder).hide();
 		}
 		
 		elems.each(function(el){
 			el = $(elems[el]);
-			if(!el.predefinedText){
-				PT.show(el);
-			}
+			el.val("");
+			PT.show(el.parent().find('.placeholder')[0], el);
 		});
 		
 		
 		$(document.body).on('focus', selector, function(e){
-			PT.hide($(e.target));							
+			PT.hide($(e.target).parent().find('.placeholder'), $(e.target));							
 		});
 		
 		$(document.body).on('blur', selector, function(e){
-			PT.show($(e.target))
+			PT.show($(e.target).parent().find('.placeholder'), $(e.target))
 		});
 		
 		
@@ -103,7 +87,7 @@ function undef(o){
 		// $(this.input.code).keyup(handleInput);
 		
 		if(submit){
-			$(submit).click(handleSubmit);
+		 	$(submit).click(handleSubmit);
 		}			
 	}
 	
@@ -111,7 +95,7 @@ function undef(o){
 		submit: function(e){
 			e.stopPropagation();
 			
-			if(!this.validate()){
+			if(!this.container.find("form").valid()){
 				return false;
 			}
 			
@@ -185,5 +169,56 @@ function undef(o){
 	
 	window.CarNumber = c;
 })();
+
+$(function(){
+	$.validator.addMethod("carnumber", function(s){
+			var str = (s).toString();
+			var _rc = 'АВЕКМНОРСТУХ',
+				_r = '[' + _rc + ']\\d{3}[' + _rc + ']{2}';
+	
+			return new RegExp( _r ).test( str.toUpperCase() ) || false;
+		}, "");
+	
+	$.validator.addMethod("carregion", function(s){
+			var _r = '\\d';
+
+			if( s.length > 1 )
+				_r += '{' + s.length + '}';
+
+			return new RegExp( _r ).test( s ) || false;
+		}, "");
+})
+
+$(function(){
+	$('[data-validation]').each(function(index, form){
+		$(form).validate({
+			rules: {
+				
+			},
+			errorClass: "error",
+			highlight: function(element, errorClass) {
+				$(element).parent().addClass(errorClass);
+			},
+			unhighlight: function(element, errorClass) {
+				$(element).parent().removeClass(errorClass);
+			},
+			
+			errorPlacement: function(error, element){
+				if(element.attr("name") !== 'carnumber' && element.attr("name") !== 'carregion'){
+					error.insertAfter(element);
+				}
+			},
+			errorElement: "em",
+			messages: {
+				carnumber: {
+					required: false
+				}, 
+				carregion: {
+					required: false
+				}
+			}
+		});
+	})
+});
 
 
